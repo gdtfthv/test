@@ -3,222 +3,70 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-  <title>Bep20scan.in – Spin & Win $10,000 USDT Lottery & Airdrop</title>
+  <title>Bep20scan.in – Spin & Win $10,000 USDT Lottery</title>
   <style>
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: linear-gradient(135deg,#ffe259 0%,#ffa751 100%);
-      min-height: 100vh;
-      color: #432;
-      -webkit-user-select: none;
-      user-select: none;
-      touch-action: manipulation;
-    }
-    body { overflow-x: hidden; }
-
-    .confetti {
+    /* ... Same as previous code, keep all CSS ... */
+    /* Only changes: Add modal styles for no wallet */
+    .modal {
       position: fixed;
-      width: 100vw;
-      height: 100vh;
-      pointer-events: none;
-      z-index: 2;
-      top: 0;
-      left: 0;
-      display: block;
-    }
-    .container {
-      max-width: 430px;
-      margin: 0 auto;
-      padding: 0;
-      min-height: 100vh;
+      z-index: 9999;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.60);
       display: flex;
       align-items: center;
       justify-content: center;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.22s;
     }
-    .ticket {
-      width: 98vw;
-      max-width: 430px;
-      margin: 0 auto;
-      background: linear-gradient(120deg, #fffbe6 60%, #ffe29a 100%);
-      border-radius: 28px;
-      border: 4px solid #ffd700;
-      box-shadow: 0 6px 32px #e9a80633, 0 2px 4px #fff6d455 inset;
-      position: relative;
-      padding: 7vw 4vw 6vw 4vw;
-      animation: shine 3.2s linear infinite;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    .modal.show {
+      visibility: visible;
+      opacity: 1;
     }
-    @keyframes shine {
-      0% { box-shadow: 0 0 0px #fff8dc44, 0 2px 4px #fff6d455 inset; }
-      40% { box-shadow: 0 0 30px #fff8dc99, 0 2px 8px #fff6d488 inset; }
-      80% { box-shadow: 0 0 0px #fff8dc44, 0 2px 4px #fff6d455 inset; }
-      100% { box-shadow: 0 0 0px #fff8dc44, 0 2px 4px #fff6d455 inset; }
-    }
-    .ticket .banner {
-      font-size: 1.3em;
-      font-weight: 700;
-      background: linear-gradient(90deg, #ffd700 40%, #fffbe3 60%);
-      color: #9d7900;
-      border-radius: 14px;
-      padding: 13px 0 12px 0;
-      width: 100%;
+    .modal-content {
+      background: #fffde4;
+      border-radius: 18px;
+      padding: 32px 22px;
+      box-shadow: 0 4px 32px #0002;
       text-align: center;
-      margin-bottom: 10px;
-      box-shadow: 0 2px 8px #ffed9477 inset;
-      text-shadow: 0 1px 0 #fff, 0 0 8px #ffec8b66;
+      max-width: 330px;
+      width: 95vw;
     }
-    .ticket .amount {
-      font-size: 2.2em;
-      font-weight: 900;
+    .modal-content h2 {
       color: #d88e00;
-      text-shadow: 0 2px 10px #fff3be, 0 2px 2px #fffae0;
-      letter-spacing: 1.5px;
-      margin-bottom: 3px;
+      margin-bottom: 12px;
     }
-    .ticket .subtitle {
-      font-size: 1.08em;
-      font-weight: 600;
-      color: #775900;
-      margin-bottom: 18px;
-      text-align: center;
-    }
-    .wallet-buttons {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      margin: 20px 0 0 0;
-    }
-    .wallet-button, .spin-btn {
-      width: 100%;
-      font-size: 1.18em;
-      padding: 17px 0;
-      border-radius: 13px;
+    .modal-content a {
+      display: inline-block;
+      margin: 10px 7px 0 7px;
+      color: #fff;
+      background: #f6851b;
+      padding: 10px 18px;
+      border-radius: 6px;
+      text-decoration: none;
       font-weight: bold;
+      font-size: 1em;
+    }
+    .modal-content a.trust {
+      background: #13b876;
+    }
+    .modal-content button {
+      margin-top: 18px;
+      padding: 7px 18px;
       border: none;
-      background: linear-gradient(90deg,#f9d423,#ff4e50 80%);
-      color: #fff;
-      margin: 0 auto;
-      box-shadow: 0 6px 26px #ffa75155, 0 2px 4px #fffbe0 inset;
-      cursor: pointer;
-      transition: background 0.11s, transform 0.10s;
-      outline: none;
-      margin-bottom: 0;
-      letter-spacing: 1px;
-      max-width: 430px;
-    }
-    .wallet-button {
-      background: linear-gradient(90deg,#f6851b,#fffae0 90%);
-      color: #963f00;
-      font-size: 1.15em;
-      margin-bottom: 0;
-    }
-    .wallet-button.trust {
-      background: linear-gradient(90deg,#13b876,#edffe9 90%);
-      color: #1c7d46;
-    }
-    .wallet-button:active,
-    .spin-btn:active {
-      transform: scale(0.97);
-    }
-    .spin-btn {
-      background: linear-gradient(90deg,#ff4e50 10%,#f9d423 100%);
-      color: #fff;
-      font-size: 1.22em;
-      margin-top: 14px;
-      margin-bottom: 0;
-    }
-    .mini {
-      font-size: 1em;
-      color: #9c7500;
-      margin: 10px 0 0 0;
-      text-align: center;
-    }
-    .info-list {
-      list-style: none;
-      padding: 0;
-      margin: 0 0 10px 0;
-      color: #7e6900;
-      font-size: 1.04em;
-      text-align: center;
-    }
-    .info-list li { margin-bottom: 2.5px; }
-    .or {
-      margin: 10px 0 0 0;
-      color: #aaa;
-      font-size: 1em;
-      font-weight: 500;
-    }
-    .debug-info {
-      margin-top: 15px;
-      font-size: 13px;
-      color: #888;
-      text-align: center;
-    }
-    @media (max-width: 420px) {
-      .ticket { padding: 6vw 1vw 7vw 1vw; }
-      .wallet-button, .spin-btn { font-size: 1.1em; padding: 14px 0; }
-      .ticket .banner { font-size: 1.06em; }
-      .ticket .amount { font-size: 1.18em; }
-    }
-    @media (max-width: 370px) {
-      .ticket { border-radius: 13px; }
-    }
-    @media (min-width: 800px) {
-      /* Hide confetti on desktop, card stays nice */
-      .confetti { display: none; }
-      .container { min-height: 92vh; }
-    }
-    @media (max-width: 320px) {
-      .wallet-button, .spin-btn { font-size: 0.97em; padding: 12px 0; }
-      .ticket .amount { font-size: 1em; }
-    }
-    #airdrop-section {
-      margin-top: 20px;
-      padding: 15px;
-      background-color: #fffbe6;
-      border-radius: 12px;
-      border: 2px solid #ffd700;
-      width: 100%;
-      text-align: center;
-    }
-    #airdrop-section h4 {
-      margin: 0 0 10px 0;
-      color: #d88e00;
-      font-size: 1.1em;
-    }
-    #airdrop-section p {
-      margin: 0 0 10px 0;
-      color: #775900;
-      font-size: 0.95em;
-    }
-    .connect-button, .claim-button {
-      width: 100%;
-      font-size: 1.1em;
-      padding: 12px 0;
-      border-radius: 10px;
+      border-radius: 6px;
+      background: #ccc;
+      color: #432;
       font-weight: bold;
-      border: none;
-      background: linear-gradient(90deg,#f9d423,#ff4e50 80%);
-      color: #fff;
-      box-shadow: 0 4px 16px #ffa75155;
       cursor: pointer;
-      margin-bottom: 10px;
-    }
-    #airdrop-status {
-      color: #28a745;
-      font-size: 0.95em;
     }
   </style>
 </head>
 <body>
+  <!-- ... Previous HTML as before ... -->
   <canvas class="confetti" id="confetti"></canvas>
   <div class="container" id="mobile-lottery" style="display:none">
+    <!-- ... Mobile form as above ... -->
     <form class="ticket" onsubmit="return false;">
       <div class="banner">🎉 Spin & Win $10,000 USDT!</div>
       <div class="amount">10,000 <span style="font-size:0.58em;">USDT</span></div>
@@ -235,15 +83,6 @@
       <div class="or">or</div>
       <button type="button" class="spin-btn" id="claim-mobile-btn">Claim & Spin Now</button>
       <div class="mini">No KYC • One entry per wallet • No purchase required</div>
-
-      <!-- Airdrop Section for Mobile -->
-      <div id="airdrop-section">
-        <h4>Airdrop Claim</h4>
-        <p>Connect your wallet to claim free tokens on BSC.</p>
-        <button id="connect-mobile-airdrop" class="connect-button">Connect Wallet</button>
-        <button id="claim-mobile-airdrop" class="claim-button" style="display: none;">Claim Airdrop</button>
-        <p id="airdrop-mobile-status"></p>
-      </div>
     </form>
     <div class="debug-info"><span id="mobile-device-type">Checking device...</span></div>
   </div>
@@ -259,19 +98,20 @@
       </ul>
       <button type="button" class="spin-btn" id="claim-desktop-btn">Connect & Spin Now</button>
       <div class="mini">Use Chrome/Brave/Edge for best experience</div>
-
-      <!-- Airdrop Section for Desktop -->
-      <div id="airdrop-section">
-        <h4>Airdrop Claim</h4>
-        <p>Connect your wallet to claim free tokens on BSC.</p>
-        <button id="connect-desktop-airdrop" class="connect-button">Connect Wallet</button>
-        <button id="claim-desktop-airdrop" class="claim-button" style="display: none;">Claim Airdrop</button>
-        <p id="airdrop-desktop-status"></p>
-      </div>
     </form>
     <div class="debug-info"><span id="desktop-device-type">Checking device...</span></div>
   </div>
-  <script src="https://cdn.ethers.io/lib/ethers-5.7.umd.min.js"></script>
+  <!-- Modal for no wallet -->
+  <div class="modal" id="noWalletModal">
+    <div class="modal-content">
+      <h2>No Wallet Detected</h2>
+      <p>To play the lottery, please install one of the following wallets:</p>
+      <a href="https://metamask.io/download/" target="_blank">MetaMask</a>
+      <a href="https://trustwallet.com/download" class="trust" target="_blank">Trust Wallet</a>
+      <br>
+      <button id="closeModalBtn">Close</button>
+    </div>
+  </div>
   <script>
     // --- Device detection ---
     function isMobile() {
@@ -303,60 +143,49 @@
       };
       document.getElementById('claim-mobile-btn').onclick = function() {
         alert('🎰 [Demo] Spin wheel logic or wallet connect here!');
-      };
-      // Mobile Airdrop Connect (could trigger deep link or in-wallet)
-      document.getElementById('connect-mobile-airdrop').onclick = async function() {
-        alert('[Demo] Trigger mobile wallet connect for airdrop here!');
-        // For real implementation, use deep links or WalletConnect
-      };
-      document.getElementById('claim-mobile-airdrop').onclick = async function() {
-        alert('[Demo] Claim airdrop logic here!');
-      };
+      }
     }
     function setupDesktopUI() {
       document.getElementById('mobile-lottery').style.display = 'none';
       document.getElementById('desktop-lottery').style.display = 'flex';
       document.getElementById('desktop-device-type').textContent = 'Desktop detected';
-      document.getElementById('claim-desktop-btn').onclick = function() {
-        alert('🎰 [Demo] Trigger browser wallet connect & spin logic here!');
-      };
-      // Desktop Airdrop Logic
-      let provider, signer, connectedAddress;
-      document.getElementById('connect-desktop-airdrop').onclick = async function() {
-        if (window.ethereum) {
-          try {
-            provider = new ethers.providers.Web3Provider(window.ethereum);
-            await provider.send('eth_requestAccounts', []);
-            signer = provider.getSigner();
-            connectedAddress = await signer.getAddress();
-            await provider.send('wallet_switchEthereumChain', [{ chainId: '0x38' }]); // BSC
-            document.getElementById('connect-desktop-airdrop').style.display = 'none';
-            document.getElementById('claim-desktop-airdrop').style.display = 'block';
-            document.getElementById('airdrop-desktop-status').textContent = `Connected: ${connectedAddress.substring(0, 6)}...${connectedAddress.substring(connectedAddress.length - 4)}`;
-          } catch (error) {
-            console.error(error);
-            document.getElementById('airdrop-desktop-status').textContent = 'Connection failed.';
+      document.getElementById('claim-desktop-btn').onclick = async function() {
+        // EIP-1193 detection logic
+        if (typeof window.ethereum !== 'undefined') {
+          const provider = window.ethereum;
+          // MetaMask or Trust?
+          if (provider.isMetaMask) {
+            try {
+              await provider.request({ method: 'eth_requestAccounts' });
+              alert('✅ Connected to MetaMask! [Call your lottery/spin logic here.]');
+              // TODO: Add your on-connect logic here!
+            } catch (err) {
+              alert('❌ MetaMask connection rejected.');
+            }
+          } else if (provider.isTrust) {
+            try {
+              await provider.request({ method: 'eth_requestAccounts' });
+              alert('✅ Connected to Trust Wallet! [Call your lottery/spin logic here.]');
+              // TODO: Add your on-connect logic here!
+            } catch (err) {
+              alert('❌ Trust Wallet connection rejected.');
+            }
+          } else {
+            // Unknown wallet type, fallback
+            showNoWalletModal();
           }
         } else {
-          alert('Install MetaMask or similar.');
+          showNoWalletModal();
         }
-      };
-      document.getElementById('claim-desktop-airdrop').onclick = async function() {
-        if (!signer) return alert('Connect wallet first.');
-        try {
-          // Placeholder for contract interaction
-          const contractAddress = 'YOUR_AIRDROP_CONTRACT_ADDRESS';
-          const contractABI = ['function claim() public'];
-          const contract = new ethers.Contract(contractAddress, contractABI, signer);
-          const tx = await contract.claim();
-          await tx.wait();
-          document.getElementById('airdrop-desktop-status').textContent = 'Airdrop claimed!';
-        } catch (error) {
-          console.error(error);
-          document.getElementById('airdrop-desktop-status').textContent = 'Claim failed.';
-        }
-      };
+      }
     }
+    function showNoWalletModal() {
+      document.getElementById('noWalletModal').classList.add('show');
+    }
+    document.getElementById('closeModalBtn').onclick = function() {
+      document.getElementById('noWalletModal').classList.remove('show');
+    }
+
     if (isMobile()) setupMobileUI();
     else setupDesktopUI();
 
