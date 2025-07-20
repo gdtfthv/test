@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bep20scan.in - Connect Wallet</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+    h3 {
+      margin-bottom: 10px;
+      color: #333;
+    }
+    p {
+      margin-bottom: 20px;
+      color: #555;
+    }
+    .wallet-button {
+      display: block;
+      padding: 12px;
+      margin: 10px auto;
+      background-color: #007bff;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 5px;
+      width: 220px;
+      font-size: 16px;
+    }
+    .wallet-button:hover {
+      background-color: #0056b3;
+    }
+    #wallet-selection {
+      display: none;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+    #dapp-content {
+      display: none;
+    }
+    .debug-info {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #777;
+    }
+  </style>
+</head>
+<body>
+  <div id="wallet-selection">
+    <h3>Connect to Bep20scan.in</h3>
+    <p>Choose your wallet to open the dApp:</p>
+    <a id="metamask-button" href="#" class="wallet-button">Open in MetaMask</a>
+    <a id="trustwallet-button" href="#" class="wallet-button">Open in Trust Wallet</a>
+  </div>
+
+  <div id="dapp-content">
+    <h2>Welcome to Bep20scan.in</h2>
+    <p>For mobile users, select a wallet above. For desktop, connect via a browser extension.</p>
+  </div>
+
+  <div class="debug-info">
+    <p>Debug: <span id="device-type">Checking device...</span></p>
+  </div>
+
+  <script>
+    // Function to detect mobile devices
+    function isMobile() {
+      const userAgent = navigator.userAgent;
+      const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(userAgent);
+      console.log('User Agent:', userAgent);
+      console.log('Is Mobile:', isMobileDevice);
+      return isMobileDevice;
+    }
+
+    // Function to open wallet with fallback to App Store
+    function openWallet(link, appStoreUrl) {
+      console.log('Opening wallet with link:', link);
+      window.location.href = link;
+      setTimeout(() => {
+        console.log('Wallet not opened, redirecting to:', appStoreUrl);
+        window.location.href = appStoreUrl;
+      }, 2500);
+    }
+
+    // Initialize page based on device type
+    function initializePage() {
+      const walletSelection = document.getElementById('wallet-selection');
+      const dappContent = document.getElementById('dapp-content');
+      const deviceTypeSpan = document.getElementById('device-type');
+
+      if (isMobile()) {
+        console.log('Mobile device detected, showing wallet selection');
+        walletSelection.style.display = 'block';
+        dappContent.style.display = 'block'; // Show both for better UX
+        deviceTypeSpan.textContent = 'Mobile device detected';
+      } else {
+        console.log('Desktop device detected, showing dApp content');
+        walletSelection.style.display = 'none';
+        dappContent.style.display = 'block';
+        deviceTypeSpan.textContent = 'Desktop device detected';
+      }
+
+      // Attach click handlers for wallet buttons
+      document.getElementById('metamask-button').addEventListener('click', (event) => {
+        event.preventDefault();
+        openWallet(
+          'https://metamask.app.link/dapp/bep20scan.in',
+          'https://apps.apple.com/us/app/metamask/id1438144202'
+        );
+      });
+
+      document.getElementById('trustwallet-button').addEventListener('click', (event) => {
+        event.preventDefault();
+        openWallet(
+          'https://link.trustwallet.com/open_url?coin_id=714&url=https://bep20scan.in',
+          'https://apps.apple.com/us/app/trust-crypto-bitcoin-wallet/id1288339409'
+        );
+      });
+    }
+
+    // Run initialization
+    try {
+      initializePage();
+    } catch (error) {
+      console.error('Initialization error:', error);
+      document.getElementById('device-type').textContent = 'Error: Check console';
+    }
+  </script>
+</body>
+</html>
