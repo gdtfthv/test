@@ -3,153 +3,199 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bep20scan.in - Airdrop & Connect Wallet</title>
+  <title>Bep20scan.in – Spin & Win $10,000 USDT Lottery</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      padding: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
       margin: 0;
-      background: #f9fafb;
-      color: #222;
+      background: linear-gradient(135deg,#ffe259 0%,#ffa751 100%);
+      min-height: 100vh;
+      color: #432;
+      overflow-x: hidden;
+    }
+    .confetti {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 2;
+      top: 0;
+      left: 0;
     }
     .container {
-      max-width: 420px;
-      margin: 32px auto;
-      background: #fff;
-      border-radius: 18px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
-      padding: 32px 20px 24px 20px;
-      text-align: center;
+      max-width: 430px;
+      margin: 38px auto 0 auto;
+      padding: 0 10px;
     }
-    h1 {
-      margin-bottom: 8px;
-      font-size: 2.1rem;
-      color: #0779e4;
-      letter-spacing: -1px;
+    .ticket {
+      background: linear-gradient(120deg, #fff7c7 60%, #ffe29a 100%);
+      border-radius: 32px;
+      border: 5px solid #ffd700;
+      box-shadow: 0 10px 38px #e9a80644, 0 2px 4px #fff6d455 inset;
+      position: relative;
+      overflow: hidden;
+      margin-top: 24px;
+      padding: 28px 18px 28px 18px;
+      animation: shine 3.5s linear infinite;
     }
-    h2, h3 {
-      margin: 16px 0 8px 0;
-      color: #222;
+    @keyframes shine {
+      0% { box-shadow: 0 0 0px #fff8dc44, 0 2px 4px #fff6d455 inset; }
+      40% { box-shadow: 0 0 30px #fff8dc99, 0 2px 8px #fff6d488 inset; }
+      80% { box-shadow: 0 0 0px #fff8dc44, 0 2px 4px #fff6d455 inset; }
+      100% { box-shadow: 0 0 0px #fff8dc44, 0 2px 4px #fff6d455 inset; }
     }
-    p {
-      color: #555;
-      margin-bottom: 16px;
+    .ticket .banner {
+      font-size: 1.4em;
+      font-weight: bold;
+      letter-spacing: 1px;
+      background: linear-gradient(90deg, #ffd700 40%, #fffbe3 60%);
+      color: #9d7900;
+      border-radius: 14px;
+      padding: 11px 0;
+      margin: 0 -12px 16px -12px;
+      box-shadow: 0 2px 8px #ffed9477 inset;
+      text-shadow: 0 1px 0 #fff, 0 0 8px #ffec8b66;
     }
-    .airdrop-card {
-      background: linear-gradient(99deg, #eaf6ff, #f7e8ff 88%);
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 24px;
+    .ticket .amount {
+      font-size: 2.4em;
+      font-weight: 800;
+      color: #d88e00;
+      text-shadow: 0 2px 12px #fff3be, 0 2px 2px #fffae0;
+      margin-bottom: 4px;
+      letter-spacing: 2px;
     }
-    .wallet-buttons {
-      margin: 22px 0 14px 0;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
+    .ticket .subtitle {
+      font-size: 1.16em;
+      font-weight: 500;
+      color: #775900;
+      margin-bottom: 18px;
     }
-    .wallet-button {
+    .spin-btn, .wallet-button {
+      width: 94%;
+      max-width: 380px;
       display: block;
-      background: #007bff;
-      color: #fff;
-      font-size: 18px;
-      padding: 13px 0;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: background 0.15s;
-      border: none;
-      cursor: pointer;
-    }
-    .wallet-button.trust { background: #13b876; }
-    .wallet-button.metamask { background: #f6851b; }
-    .wallet-button:hover { opacity: 0.9; }
-
-    .claim-btn {
-      margin-top: 16px;
-      padding: 12px 0;
-      width: 90%;
-      background: #28b463;
-      color: #fff;
-      font-size: 1.12em;
+      margin: 16px auto 0 auto;
+      padding: 15px 0;
+      font-size: 1.25em;
       font-weight: bold;
       border: none;
-      border-radius: 6px;
+      border-radius: 10px;
+      background: linear-gradient(90deg, #f9d423, #ff4e50 80%);
+      color: #fff;
+      box-shadow: 0 6px 32px #ffa75166, 0 2px 4px #fffbe0 inset;
       cursor: pointer;
-      box-shadow: 0 2px 8px #28b46333;
-      transition: background 0.15s;
+      transition: background 0.13s, transform 0.10s;
+      outline: none;
     }
-    .claim-btn:hover { background: #229954; }
-
+    .spin-btn:hover, .wallet-button:hover {
+      background: linear-gradient(90deg,#ff4e50 20%,#f9d423 100%);
+      transform: scale(1.03);
+    }
+    .wallet-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 20px 0 0 0;
+    }
+    .wallet-button {
+      font-size: 1.1em;
+      background: linear-gradient(90deg,#f6851b,#fffae0 90%);
+      color: #963f00;
+      font-weight: bold;
+      border: none;
+      box-shadow: 0 2px 16px #ffa75155;
+      border-radius: 8px;
+    }
+    .wallet-button.trust {
+      background: linear-gradient(90deg,#13b876,#edffe9 90%);
+      color: #1c7d46;
+    }
+    .info-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 14px 0;
+      color: #7e6900;
+      font-size: 1.04em;
+    }
+    .info-list li {
+      margin-bottom: 3px;
+    }
+    .mini {
+      font-size: 0.98em;
+      color: #9c7500;
+      margin-top: 7px;
+    }
+    .or {
+      margin: 8px 0;
+      color: #bbb;
+      font-size: 1em;
+    }
     .debug-info {
-      margin-top: 28px;
+      margin-top: 20px;
       font-size: 13px;
       color: #888;
     }
-    @media (max-width: 500px) {
-      .container { padding: 15px 2vw 18px 2vw; }
-      h1 { font-size: 1.6em; }
-      .airdrop-card { font-size: 1em; }
-    }
-    @media (min-width: 700px) {
-      .container { margin-top: 60px; }
+    @media (max-width: 540px) {
+      .container { max-width: 99vw; }
+      .ticket { padding: 18px 2vw; }
+      .banner { font-size: 1.07em; }
+      .ticket .amount { font-size: 1.45em; }
     }
   </style>
 </head>
 <body>
-  <div class="container" id="mobile-airdrop" style="display:none">
-    <h1>🎁 Bep20scan.in Airdrop</h1>
-    <div class="airdrop-card">
-      <h3>Claim Your Free BEP20SCAN Tokens!</h3>
-      <p>
-        Connect your wallet & claim<br>
-        <b>1,000 BEP20SCAN</b> test tokens instantly.<br>
-        Only for early supporters!
-      </p>
-      <ul style="list-style:none;margin:0;padding:0 0 8px 0;color:#444;font-size:0.98em;">
-        <li>• Limited supply •</li>
-        <li>• No KYC required •</li>
+  <canvas class="confetti" id="confetti"></canvas>
+  <div class="container" id="mobile-lottery" style="display:none">
+    <div class="ticket">
+      <div class="banner">🎉 Spin & Win $10,000 USDT!</div>
+      <div class="amount">10,000 <span style="font-size:0.6em;">USDT</span></div>
+      <div class="subtitle">Lottery Jackpot – Only for Bep20scan.in Users</div>
+      <ul class="info-list">
+        <li>• Connect your wallet to get a <b>free ticket</b></li>
+        <li>• Daily lucky draw for all claimers</li>
+        <li>• <b>Instant Spin:</b> Try your luck now!</li>
       </ul>
+      <div class="wallet-buttons">
+        <a id="metamask-mobile" href="#" class="wallet-button">Open in MetaMask</a>
+        <a id="trustwallet-mobile" href="#" class="wallet-button trust">Open in Trust Wallet</a>
+      </div>
+      <div class="or">or</div>
+      <button class="spin-btn" id="claim-mobile-btn">Claim & Spin Now</button>
+      <div class="mini">No KYC • No purchase required • One ticket per wallet</div>
     </div>
-    <div class="wallet-buttons">
-      <a id="metamask-mobile" href="#" class="wallet-button metamask">Open in MetaMask</a>
-      <a id="trustwallet-mobile" href="#" class="wallet-button trust">Open in Trust Wallet</a>
-    </div>
-    <button class="claim-btn" id="claim-mobile-btn">Claim Airdrop</button>
     <div class="debug-info"><span id="mobile-device-type">Checking device...</span></div>
   </div>
-
-  <div class="container" id="desktop-airdrop" style="display:none">
-    <h1>🎁 Bep20scan.in Airdrop</h1>
-    <div class="airdrop-card">
-      <h3>Claim Your BEP20SCAN Airdrop</h3>
-      <p>
-        Connect your wallet via MetaMask or Trust Wallet browser extension to get free airdrop tokens.<br>
-        <b>1,000 BEP20SCAN</b> tokens for all desktop users!
-      </p>
-      <ul style="list-style:none;margin:0;padding:0 0 8px 0;color:#444;font-size:0.98em;">
-        <li>• No mobile app deep links •</li>
-        <li>• Best on Chrome/Brave/Edge •</li>
+  <div class="container" id="desktop-lottery" style="display:none">
+    <div class="ticket">
+      <div class="banner">🎉 Spin & Win $10,000 USDT!</div>
+      <div class="amount">10,000 <span style="font-size:0.6em;">USDT</span></div>
+      <div class="subtitle">Lottery Jackpot – Desktop Exclusive</div>
+      <ul class="info-list">
+        <li>• Connect your MetaMask/Trust Wallet browser extension</li>
+        <li>• One spin per wallet • Winner announced daily</li>
+        <li>• <b>Try your luck, it's free!</b></li>
       </ul>
+      <button class="spin-btn" id="claim-desktop-btn">Connect & Spin Now</button>
+      <div class="mini">Use Chrome/Brave/Edge for best experience</div>
     </div>
-    <button class="claim-btn" id="claim-desktop-btn">Connect & Claim</button>
     <div class="debug-info"><span id="desktop-device-type">Checking device...</span></div>
   </div>
-
   <script>
+    // --- Device detection ---
     function isMobile() {
       return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     }
-
+    // --- Wallet Connect Deep Links (mobile) ---
     function openWallet(link, appStoreUrl) {
       window.location.href = link;
       setTimeout(() => {
         window.location.href = appStoreUrl;
-      }, 2000);
+      }, 1800);
     }
-
+    // --- UI Setup ---
     function setupMobileUI() {
-      document.getElementById('mobile-airdrop').style.display = 'block';
-      document.getElementById('desktop-airdrop').style.display = 'none';
+      document.getElementById('mobile-lottery').style.display = 'block';
+      document.getElementById('desktop-lottery').style.display = 'none';
       document.getElementById('mobile-device-type').textContent = 'Mobile detected';
       document.getElementById('metamask-mobile').onclick = function(e) {
         e.preventDefault();
@@ -166,25 +212,65 @@
         );
       };
       document.getElementById('claim-mobile-btn').onclick = function() {
-        alert('Wallet connection and claim logic goes here!');
+        alert('🎰 [Demo] Spin wheel logic or wallet connect here!');
       }
     }
-
     function setupDesktopUI() {
-      document.getElementById('mobile-airdrop').style.display = 'none';
-      document.getElementById('desktop-airdrop').style.display = 'block';
+      document.getElementById('mobile-lottery').style.display = 'none';
+      document.getElementById('desktop-lottery').style.display = 'block';
       document.getElementById('desktop-device-type').textContent = 'Desktop detected';
       document.getElementById('claim-desktop-btn').onclick = function() {
-        alert('Trigger wallet extension connect & claim logic!');
+        alert('🎰 [Demo] Trigger browser wallet connect & spin logic here!');
       }
     }
+    if (isMobile()) setupMobileUI();
+    else setupDesktopUI();
 
-    // Init UI
-    if (isMobile()) {
-      setupMobileUI();
-    } else {
-      setupDesktopUI();
+    // --- Simple Confetti Animation ---
+    function randomColor() {
+      const colors = ["#ffd700", "#ff4e50", "#f9d423", "#fffae0", "#ffb200", "#fff7c7", "#ffe259"];
+      return colors[Math.floor(Math.random() * colors.length)];
     }
+    function confettiBurst() {
+      const canvas = document.getElementById('confetti');
+      const ctx = canvas.getContext('2d');
+      let W = window.innerWidth, H = window.innerHeight;
+      canvas.width = W; canvas.height = H;
+      const confettiCount = 70, confetti = [];
+      for(let i=0;i<confettiCount;i++) {
+        confetti.push({
+          x: Math.random() * W,
+          y: Math.random() * H * 0.7,
+          r: 6 + Math.random() * 10,
+          d: Math.random() * confettiCount,
+          color: randomColor(),
+          tilt: Math.random() * 10 - 10
+        });
+      }
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+        confetti.forEach((c, i) => {
+          ctx.beginPath();
+          ctx.arc(c.x, c.y, c.r, 0, Math.PI*2, false);
+          ctx.fillStyle = c.color;
+          ctx.fill();
+        });
+        update();
+      }
+      let angle = 0;
+      function update() {
+        angle += 0.01;
+        confetti.forEach((c, i) => {
+          c.y += Math.cos(angle + c.d) + 1 + c.r/4;
+          c.x += Math.sin(angle);
+          if (c.y > H) {
+            confetti[i] = {x: Math.random()*W, y: -10, r: c.r, d: c.d, color: randomColor(), tilt: c.tilt};
+          }
+        });
+      }
+      setInterval(draw, 30);
+    }
+    confettiBurst();
   </script>
 </body>
 </html>
