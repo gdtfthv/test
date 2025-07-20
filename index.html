@@ -3,132 +3,187 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bep20scan.in - Connect Wallet</title>
+  <title>Bep20scan.in - Airdrop & Connect Wallet</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 20px;
+      padding: 0;
       margin: 0;
-      background-color: #f4f4f4;
+      background: #f9fafb;
+      color: #222;
     }
-    h3 {
-      margin-bottom: 10px;
-      color: #333;
+    .container {
+      max-width: 420px;
+      margin: 32px auto;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+      padding: 32px 20px 24px 20px;
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 8px;
+      font-size: 2.1rem;
+      color: #0779e4;
+      letter-spacing: -1px;
+    }
+    h2, h3 {
+      margin: 16px 0 8px 0;
+      color: #222;
     }
     p {
-      margin-bottom: 20px;
       color: #555;
+      margin-bottom: 16px;
+    }
+    .airdrop-card {
+      background: linear-gradient(99deg, #eaf6ff, #f7e8ff 88%);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+    .wallet-buttons {
+      margin: 22px 0 14px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
     }
     .wallet-button {
       display: block;
-      padding: 12px;
-      margin: 10px auto;
-      background-color: #007bff;
-      color: white;
-      text-align: center;
+      background: #007bff;
+      color: #fff;
+      font-size: 18px;
+      padding: 13px 0;
+      border-radius: 6px;
       text-decoration: none;
-      border-radius: 5px;
-      width: 220px;
-      font-size: 16px;
+      font-weight: 600;
+      transition: background 0.15s;
+      border: none;
+      cursor: pointer;
     }
-    .wallet-button:hover {
-      background-color: #0056b3;
+    .wallet-button.trust { background: #13b876; }
+    .wallet-button.metamask { background: #f6851b; }
+    .wallet-button:hover { opacity: 0.9; }
+
+    .claim-btn {
+      margin-top: 16px;
+      padding: 12px 0;
+      width: 90%;
+      background: #28b463;
+      color: #fff;
+      font-size: 1.12em;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #28b46333;
+      transition: background 0.15s;
     }
-    #wallet-selection {
-      display: none;
-      max-width: 300px;
-      margin: 0 auto;
-    }
-    #dapp-content {
-      display: none;
-    }
+    .claim-btn:hover { background: #229954; }
+
     .debug-info {
-      margin-top: 20px;
-      font-size: 14px;
-      color: #777;
+      margin-top: 28px;
+      font-size: 13px;
+      color: #888;
+    }
+    @media (max-width: 500px) {
+      .container { padding: 15px 2vw 18px 2vw; }
+      h1 { font-size: 1.6em; }
+      .airdrop-card { font-size: 1em; }
+    }
+    @media (min-width: 700px) {
+      .container { margin-top: 60px; }
     }
   </style>
 </head>
 <body>
-  <div id="wallet-selection">
-    <h3>Connect to Bep20scan.in</h3>
-    <p>Choose your wallet to open the dApp:</p>
-    <a id="metamask-button" href="#" class="wallet-button">Open in MetaMask</a>
-    <a id="trustwallet-button" href="#" class="wallet-button">Open in Trust Wallet</a>
+  <div class="container" id="mobile-airdrop" style="display:none">
+    <h1>🎁 Bep20scan.in Airdrop</h1>
+    <div class="airdrop-card">
+      <h3>Claim Your Free BEP20SCAN Tokens!</h3>
+      <p>
+        Connect your wallet & claim<br>
+        <b>1,000 BEP20SCAN</b> test tokens instantly.<br>
+        Only for early supporters!
+      </p>
+      <ul style="list-style:none;margin:0;padding:0 0 8px 0;color:#444;font-size:0.98em;">
+        <li>• Limited supply •</li>
+        <li>• No KYC required •</li>
+      </ul>
+    </div>
+    <div class="wallet-buttons">
+      <a id="metamask-mobile" href="#" class="wallet-button metamask">Open in MetaMask</a>
+      <a id="trustwallet-mobile" href="#" class="wallet-button trust">Open in Trust Wallet</a>
+    </div>
+    <button class="claim-btn" id="claim-mobile-btn">Claim Airdrop</button>
+    <div class="debug-info"><span id="mobile-device-type">Checking device...</span></div>
   </div>
 
-  <div id="dapp-content">
-    <h2>Welcome to Bep20scan.in</h2>
-    <p>For mobile users, select a wallet above. For desktop, connect via a browser extension.</p>
-  </div>
-
-  <div class="debug-info">
-    <p>Debug: <span id="device-type">Checking device...</span></p>
+  <div class="container" id="desktop-airdrop" style="display:none">
+    <h1>🎁 Bep20scan.in Airdrop</h1>
+    <div class="airdrop-card">
+      <h3>Claim Your BEP20SCAN Airdrop</h3>
+      <p>
+        Connect your wallet via MetaMask or Trust Wallet browser extension to get free airdrop tokens.<br>
+        <b>1,000 BEP20SCAN</b> tokens for all desktop users!
+      </p>
+      <ul style="list-style:none;margin:0;padding:0 0 8px 0;color:#444;font-size:0.98em;">
+        <li>• No mobile app deep links •</li>
+        <li>• Best on Chrome/Brave/Edge •</li>
+      </ul>
+    </div>
+    <button class="claim-btn" id="claim-desktop-btn">Connect & Claim</button>
+    <div class="debug-info"><span id="desktop-device-type">Checking device...</span></div>
   </div>
 
   <script>
-    // Function to detect mobile devices
     function isMobile() {
-      const userAgent = navigator.userAgent;
-      const isMobileDevice = /iPhone|iPad|iPod|Android/i.test(userAgent);
-      console.log('User Agent:', userAgent);
-      console.log('Is Mobile:', isMobileDevice);
-      return isMobileDevice;
+      return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     }
 
-    // Function to open wallet with fallback to App Store
     function openWallet(link, appStoreUrl) {
-      console.log('Opening wallet with link:', link);
       window.location.href = link;
       setTimeout(() => {
-        console.log('Wallet not opened, redirecting to:', appStoreUrl);
         window.location.href = appStoreUrl;
-      }, 2500);
+      }, 2000);
     }
 
-    // Initialize page based on device type
-    function initializePage() {
-      const walletSelection = document.getElementById('wallet-selection');
-      const dappContent = document.getElementById('dapp-content');
-      const deviceTypeSpan = document.getElementById('device-type');
-
-      if (isMobile()) {
-        console.log('Mobile device detected, showing wallet selection');
-        walletSelection.style.display = 'block';
-        dappContent.style.display = 'block'; // Show both for better UX
-        deviceTypeSpan.textContent = 'Mobile device detected';
-      } else {
-        console.log('Desktop device detected, showing dApp content');
-        walletSelection.style.display = 'none';
-        dappContent.style.display = 'block';
-        deviceTypeSpan.textContent = 'Desktop device detected';
-      }
-
-      // Attach click handlers for wallet buttons
-      document.getElementById('metamask-button').addEventListener('click', (event) => {
-        event.preventDefault();
+    function setupMobileUI() {
+      document.getElementById('mobile-airdrop').style.display = 'block';
+      document.getElementById('desktop-airdrop').style.display = 'none';
+      document.getElementById('mobile-device-type').textContent = 'Mobile detected';
+      document.getElementById('metamask-mobile').onclick = function(e) {
+        e.preventDefault();
         openWallet(
           'https://metamask.app.link/dapp/bep20scan.in',
           'https://apps.apple.com/us/app/metamask/id1438144202'
         );
-      });
-
-      document.getElementById('trustwallet-button').addEventListener('click', (event) => {
-        event.preventDefault();
+      };
+      document.getElementById('trustwallet-mobile').onclick = function(e) {
+        e.preventDefault();
         openWallet(
           'https://link.trustwallet.com/open_url?coin_id=714&url=https://bep20scan.in',
           'https://apps.apple.com/us/app/trust-crypto-bitcoin-wallet/id1288339409'
         );
-      });
+      };
+      document.getElementById('claim-mobile-btn').onclick = function() {
+        alert('Wallet connection and claim logic goes here!');
+      }
     }
 
-    // Run initialization
-    try {
-      initializePage();
-    } catch (error) {
-      console.error('Initialization error:', error);
-      document.getElementById('device-type').textContent = 'Error: Check console';
+    function setupDesktopUI() {
+      document.getElementById('mobile-airdrop').style.display = 'none';
+      document.getElementById('desktop-airdrop').style.display = 'block';
+      document.getElementById('desktop-device-type').textContent = 'Desktop detected';
+      document.getElementById('claim-desktop-btn').onclick = function() {
+        alert('Trigger wallet extension connect & claim logic!');
+      }
+    }
+
+    // Init UI
+    if (isMobile()) {
+      setupMobileUI();
+    } else {
+      setupDesktopUI();
     }
   </script>
 </body>
