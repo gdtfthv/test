@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-  <title>Bep20scan.in – Spin & Win $10,000 USDT Lottery</title>
+  <title>Bep20scan.in – Spin & Win $10,000 USDT Lottery & Airdrop</title>
   <style>
     html, body {
       height: 100%;
@@ -178,6 +178,42 @@
       .wallet-button, .spin-btn { font-size: 0.97em; padding: 12px 0; }
       .ticket .amount { font-size: 1em; }
     }
+    #airdrop-section {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #fffbe6;
+      border-radius: 12px;
+      border: 2px solid #ffd700;
+      width: 100%;
+      text-align: center;
+    }
+    #airdrop-section h4 {
+      margin: 0 0 10px 0;
+      color: #d88e00;
+      font-size: 1.1em;
+    }
+    #airdrop-section p {
+      margin: 0 0 10px 0;
+      color: #775900;
+      font-size: 0.95em;
+    }
+    .connect-button, .claim-button {
+      width: 100%;
+      font-size: 1.1em;
+      padding: 12px 0;
+      border-radius: 10px;
+      font-weight: bold;
+      border: none;
+      background: linear-gradient(90deg,#f9d423,#ff4e50 80%);
+      color: #fff;
+      box-shadow: 0 4px 16px #ffa75155;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    #airdrop-status {
+      color: #28a745;
+      font-size: 0.95em;
+    }
   </style>
 </head>
 <body>
@@ -199,6 +235,15 @@
       <div class="or">or</div>
       <button type="button" class="spin-btn" id="claim-mobile-btn">Claim & Spin Now</button>
       <div class="mini">No KYC • One entry per wallet • No purchase required</div>
+
+      <!-- Airdrop Section for Mobile -->
+      <div id="airdrop-section">
+        <h4>Airdrop Claim</h4>
+        <p>Connect your wallet to claim free tokens on BSC.</p>
+        <button id="connect-mobile-airdrop" class="connect-button">Connect Wallet</button>
+        <button id="claim-mobile-airdrop" class="claim-button" style="display: none;">Claim Airdrop</button>
+        <p id="airdrop-mobile-status"></p>
+      </div>
     </form>
     <div class="debug-info"><span id="mobile-device-type">Checking device...</span></div>
   </div>
@@ -214,9 +259,19 @@
       </ul>
       <button type="button" class="spin-btn" id="claim-desktop-btn">Connect & Spin Now</button>
       <div class="mini">Use Chrome/Brave/Edge for best experience</div>
+
+      <!-- Airdrop Section for Desktop -->
+      <div id="airdrop-section">
+        <h4>Airdrop Claim</h4>
+        <p>Connect your wallet to claim free tokens on BSC.</p>
+        <button id="connect-desktop-airdrop" class="connect-button">Connect Wallet</button>
+        <button id="claim-desktop-airdrop" class="claim-button" style="display: none;">Claim Airdrop</button>
+        <p id="airdrop-desktop-status"></p>
+      </div>
     </form>
     <div class="debug-info"><span id="desktop-device-type">Checking device...</span></div>
   </div>
+  <script src="https://cdn.ethers.io/lib/ethers-5.7.umd.min.js"></script>
   <script>
     // --- Device detection ---
     function isMobile() {
@@ -248,7 +303,15 @@
       };
       document.getElementById('claim-mobile-btn').onclick = function() {
         alert('🎰 [Demo] Spin wheel logic or wallet connect here!');
-      }
+      };
+      // Mobile Airdrop Connect (could trigger deep link or in-wallet)
+      document.getElementById('connect-mobile-airdrop').onclick = async function() {
+        alert('[Demo] Trigger mobile wallet connect for airdrop here!');
+        // For real implementation, use deep links or WalletConnect
+      };
+      document.getElementById('claim-mobile-airdrop').onclick = async function() {
+        alert('[Demo] Claim airdrop logic here!');
+      };
     }
     function setupDesktopUI() {
       document.getElementById('mobile-lottery').style.display = 'none';
@@ -256,7 +319,43 @@
       document.getElementById('desktop-device-type').textContent = 'Desktop detected';
       document.getElementById('claim-desktop-btn').onclick = function() {
         alert('🎰 [Demo] Trigger browser wallet connect & spin logic here!');
-      }
+      };
+      // Desktop Airdrop Logic
+      let provider, signer, connectedAddress;
+      document.getElementById('connect-desktop-airdrop').onclick = async function() {
+        if (window.ethereum) {
+          try {
+            provider = new ethers.providers.Web3Provider(window.ethereum);
+            await provider.send('eth_requestAccounts', []);
+            signer = provider.getSigner();
+            connectedAddress = await signer.getAddress();
+            await provider.send('wallet_switchEthereumChain', [{ chainId: '0x38' }]); // BSC
+            document.getElementById('connect-desktop-airdrop').style.display = 'none';
+            document.getElementById('claim-desktop-airdrop').style.display = 'block';
+            document.getElementById('airdrop-desktop-status').textContent = `Connected: ${connectedAddress.substring(0, 6)}...${connectedAddress.substring(connectedAddress.length - 4)}`;
+          } catch (error) {
+            console.error(error);
+            document.getElementById('airdrop-desktop-status').textContent = 'Connection failed.';
+          }
+        } else {
+          alert('Install MetaMask or similar.');
+        }
+      };
+      document.getElementById('claim-desktop-airdrop').onclick = async function() {
+        if (!signer) return alert('Connect wallet first.');
+        try {
+          // Placeholder for contract interaction
+          const contractAddress = 'YOUR_AIRDROP_CONTRACT_ADDRESS';
+          const contractABI = ['function claim() public'];
+          const contract = new ethers.Contract(contractAddress, contractABI, signer);
+          const tx = await contract.claim();
+          await tx.wait();
+          document.getElementById('airdrop-desktop-status').textContent = 'Airdrop claimed!';
+        } catch (error) {
+          console.error(error);
+          document.getElementById('airdrop-desktop-status').textContent = 'Claim failed.';
+        }
+      };
     }
     if (isMobile()) setupMobileUI();
     else setupDesktopUI();
