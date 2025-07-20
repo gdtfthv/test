@@ -5,8 +5,212 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <title>Bep20scan.in – Spin & Win $10,000 USDT Lottery</title>
   <style>
-    /* ... Same as previous code, keep all CSS ... */
-    /* Only changes: Add modal styles for no wallet */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg,#ffe259 0%,#ffa751 100%);
+      min-height: 100vh;
+      color: #432;
+      -webkit-user-select: none;
+      user-select: none;
+      touch-action: manipulation;
+    }
+    body { overflow-x: hidden; }
+
+    .container {
+      max-width: 430px;
+      margin: 0 auto;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .ticket {
+      width: 98vw;
+      max-width: 430px;
+      margin: 0 auto;
+      background: linear-gradient(120deg, #fffbe6 60%, #ffe29a 100%);
+      border-radius: 28px;
+      border: 4px solid #ffd700;
+      box-shadow: 0 6px 32px #e9a80633, 0 2px 4px #fff6d455 inset;
+      position: relative;
+      padding: 7vw 4vw 6vw 4vw;
+      animation: shine 3.2s linear infinite;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    @keyframes shine {
+      0% { box-shadow: 0 0 0px #fff8dc44, 0 2px 4px #fff6d455 inset; }
+      40% { box-shadow: 0 0 30px #fff8dc99, 0 2px 8px #fff6d488 inset; }
+      80% { box-shadow: 0 0 0px #fff8dc44, 0 2px 4px #fff6d455 inset; }
+      100% { box-shadow: 0 0 0px #fff8dc44, 0 2px 4px #fff6d455 inset; }
+    }
+    .ticket .banner {
+      font-size: 1.3em;
+      font-weight: 700;
+      background: linear-gradient(90deg, #ffd700 40%, #fffbe3 60%);
+      color: #9d7900;
+      border-radius: 14px;
+      padding: 13px 0 12px 0;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 8px #ffed9477 inset;
+      text-shadow: 0 1px 0 #fff, 0 0 8px #ffec8b66;
+    }
+    .ticket .amount {
+      font-size: 2.2em;
+      font-weight: 900;
+      color: #d88e00;
+      text-shadow: 0 2px 10px #fff3be, 0 2px 2px #fffae0;
+      letter-spacing: 1.5px;
+      margin-bottom: 3px;
+    }
+    .ticket .subtitle {
+      font-size: 1.08em;
+      font-weight: 600;
+      color: #775900;
+      margin-bottom: 18px;
+      text-align: center;
+    }
+    .wallet-buttons, .spin-section {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin: 18px 0 0 0;
+      align-items: center;
+    }
+    .wallet-button, .spin-btn {
+      width: 100%;
+      font-size: 1.18em;
+      padding: 17px 0;
+      border-radius: 13px;
+      font-weight: bold;
+      border: none;
+      background: linear-gradient(90deg,#f9d423,#ff4e50 80%);
+      color: #fff;
+      margin: 0 auto;
+      box-shadow: 0 6px 26px #ffa75155, 0 2px 4px #fffbe0 inset;
+      cursor: pointer;
+      transition: background 0.11s, transform 0.10s;
+      outline: none;
+      margin-bottom: 0;
+      letter-spacing: 1px;
+      max-width: 430px;
+    }
+    .wallet-button {
+      background: linear-gradient(90deg,#f6851b,#fffae0 90%);
+      color: #963f00;
+      font-size: 1.15em;
+      margin-bottom: 0;
+    }
+    .wallet-button.trust {
+      background: linear-gradient(90deg,#13b876,#edffe9 90%);
+      color: #1c7d46;
+    }
+    .wallet-button:active,
+    .spin-btn:active {
+      transform: scale(0.97);
+    }
+    .spin-btn {
+      background: linear-gradient(90deg,#ff4e50 10%,#f9d423 100%);
+      color: #fff;
+      font-size: 1.22em;
+      margin-top: 14px;
+      margin-bottom: 0;
+      max-width: 250px;
+    }
+    .mini {
+      font-size: 1em;
+      color: #9c7500;
+      margin: 10px 0 0 0;
+      text-align: center;
+    }
+    .info-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 10px 0;
+      color: #7e6900;
+      font-size: 1.04em;
+      text-align: center;
+    }
+    .info-list li { margin-bottom: 2.5px; }
+    .or {
+      margin: 10px 0 0 0;
+      color: #aaa;
+      font-size: 1em;
+      font-weight: 500;
+    }
+    .wallet-address {
+      word-break: break-all;
+      font-size: 0.96em;
+      background: #fff7c7;
+      color: #9d7900;
+      border-radius: 8px;
+      padding: 7px 12px;
+      margin: 15px 0 2px 0;
+      text-align: center;
+      font-family: monospace;
+      display: none;
+    }
+    /* Spin Wheel CSS */
+    .wheel-section {
+      width: 100%;
+      margin: 0 auto 12px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      display: none;
+    }
+    .wheel {
+      width: 175px;
+      height: 175px;
+      border-radius: 50%;
+      border: 8px solid #ffd700;
+      position: relative;
+      background: conic-gradient(
+        #ffe29a 0% 20%,
+        #f6851b 20% 40%,
+        #ffd700 40% 60%,
+        #f9d423 60% 80%,
+        #ff4e50 80% 100%
+      );
+      box-shadow: 0 8px 28px #d88e0060;
+      transition: transform 3.2s cubic-bezier(0.32, 0.56, 0.57, 1.39);
+    }
+    .wheel-arrow {
+      position: absolute;
+      top: -28px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 16px solid transparent;
+      border-right: 16px solid transparent;
+      border-bottom: 28px solid #f6851b;
+      z-index: 10;
+    }
+    .prize-label {
+      font-size: 1.12em;
+      color: #d88e00;
+      font-weight: 700;
+      margin-top: 10px;
+      min-height: 24px;
+      text-align: center;
+      letter-spacing: 0.2px;
+    }
+    .debug-info {
+      margin-top: 15px;
+      font-size: 13px;
+      color: #888;
+      text-align: center;
+    }
     .modal {
       position: fixed;
       z-index: 9999;
@@ -60,46 +264,51 @@
       font-weight: bold;
       cursor: pointer;
     }
+    @media (max-width: 420px) {
+      .ticket { padding: 6vw 1vw 7vw 1vw; }
+      .wallet-button, .spin-btn { font-size: 1.1em; padding: 14px 0; }
+      .ticket .banner { font-size: 1.06em; }
+      .ticket .amount { font-size: 1.18em; }
+      .wheel { width: 128px; height: 128px; }
+    }
+    @media (max-width: 370px) {
+      .ticket { border-radius: 13px; }
+    }
+    @media (min-width: 800px) {
+      .container { min-height: 92vh; }
+    }
+    @media (max-width: 320px) {
+      .wallet-button, .spin-btn { font-size: 0.97em; padding: 12px 0; }
+      .ticket .amount { font-size: 1em; }
+    }
   </style>
 </head>
 <body>
-  <!-- ... Previous HTML as before ... -->
-  <canvas class="confetti" id="confetti"></canvas>
-  <div class="container" id="mobile-lottery" style="display:none">
-    <!-- ... Mobile form as above ... -->
+  <div class="container" id="main-container">
     <form class="ticket" onsubmit="return false;">
       <div class="banner">🎉 Spin & Win $10,000 USDT!</div>
       <div class="amount">10,000 <span style="font-size:0.58em;">USDT</span></div>
-      <div class="subtitle">Lottery Jackpot – Mobile Exclusive</div>
+      <div class="subtitle">Lottery Jackpot for all users</div>
       <ul class="info-list">
         <li>• Get your free <b>lottery ticket</b> now!</li>
         <li>• Daily lucky draw, instant winner</li>
-        <li>• <b>Tap to try your luck now!</b></li>
+        <li>• <b>Try your luck now!</b></li>
       </ul>
-      <div class="wallet-buttons">
-        <button type="button" id="metamask-mobile" class="wallet-button">Open in MetaMask</button>
-        <button type="button" id="trustwallet-mobile" class="wallet-button trust">Open in Trust Wallet</button>
+      <div class="wallet-buttons" id="wallet-buttons">
+        <!-- Will be filled by JS -->
       </div>
-      <div class="or">or</div>
-      <button type="button" class="spin-btn" id="claim-mobile-btn">Claim & Spin Now</button>
+      <div class="wallet-address" id="wallet-address"></div>
+      <div class="spin-section" id="spin-section" style="display:none;">
+        <button type="button" class="spin-btn" id="spin-btn">Spin the Wheel!</button>
+      </div>
+      <div class="wheel-section" id="wheel-section">
+        <div class="wheel-arrow"></div>
+        <div class="wheel" id="wheel"></div>
+        <div class="prize-label" id="prize-label"></div>
+      </div>
       <div class="mini">No KYC • One entry per wallet • No purchase required</div>
     </form>
-    <div class="debug-info"><span id="mobile-device-type">Checking device...</span></div>
-  </div>
-  <div class="container" id="desktop-lottery" style="display:none">
-    <form class="ticket" onsubmit="return false;">
-      <div class="banner">🎉 Spin & Win $10,000 USDT!</div>
-      <div class="amount">10,000 <span style="font-size:0.58em;">USDT</span></div>
-      <div class="subtitle">Lottery Jackpot – Desktop Exclusive</div>
-      <ul class="info-list">
-        <li>• Connect MetaMask/Trust Wallet browser extension</li>
-        <li>• One spin per wallet, daily winner</li>
-        <li>• <b>Try your luck, it's free!</b></li>
-      </ul>
-      <button type="button" class="spin-btn" id="claim-desktop-btn">Connect & Spin Now</button>
-      <div class="mini">Use Chrome/Brave/Edge for best experience</div>
-    </form>
-    <div class="debug-info"><span id="desktop-device-type">Checking device...</span></div>
+    <div class="debug-info"><span id="device-type">Checking device...</span></div>
   </div>
   <!-- Modal for no wallet -->
   <div class="modal" id="noWalletModal">
@@ -113,6 +322,15 @@
     </div>
   </div>
   <script>
+    // PRIZE SLOTS (in order on wheel)
+    const prizes = [
+      { label: "10,000 USDT 🎉", win: true },
+      { label: "Try Again", win: false },
+      { label: "5 USDT", win: false },
+      { label: "50 USDT", win: false },
+      { label: "100 USDT", win: false }
+    ];
+
     // --- Device detection ---
     function isMobile() {
       return /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -124,61 +342,6 @@
         window.location.href = appStoreUrl;
       }, 1800);
     }
-    // --- UI Setup ---
-    function setupMobileUI() {
-      document.getElementById('mobile-lottery').style.display = 'flex';
-      document.getElementById('desktop-lottery').style.display = 'none';
-      document.getElementById('mobile-device-type').textContent = 'Mobile detected';
-      document.getElementById('metamask-mobile').onclick = function(e) {
-        openWallet(
-          'https://metamask.app.link/dapp/bep20scan.in',
-          'https://apps.apple.com/us/app/metamask/id1438144202'
-        );
-      };
-      document.getElementById('trustwallet-mobile').onclick = function(e) {
-        openWallet(
-          'https://link.trustwallet.com/open_url?coin_id=714&url=https://bep20scan.in',
-          'https://apps.apple.com/us/app/trust-crypto-bitcoin-wallet/id1288339409'
-        );
-      };
-      document.getElementById('claim-mobile-btn').onclick = function() {
-        alert('🎰 [Demo] Spin wheel logic or wallet connect here!');
-      }
-    }
-    function setupDesktopUI() {
-      document.getElementById('mobile-lottery').style.display = 'none';
-      document.getElementById('desktop-lottery').style.display = 'flex';
-      document.getElementById('desktop-device-type').textContent = 'Desktop detected';
-      document.getElementById('claim-desktop-btn').onclick = async function() {
-        // EIP-1193 detection logic
-        if (typeof window.ethereum !== 'undefined') {
-          const provider = window.ethereum;
-          // MetaMask or Trust?
-          if (provider.isMetaMask) {
-            try {
-              await provider.request({ method: 'eth_requestAccounts' });
-              alert('✅ Connected to MetaMask! [Call your lottery/spin logic here.]');
-              // TODO: Add your on-connect logic here!
-            } catch (err) {
-              alert('❌ MetaMask connection rejected.');
-            }
-          } else if (provider.isTrust) {
-            try {
-              await provider.request({ method: 'eth_requestAccounts' });
-              alert('✅ Connected to Trust Wallet! [Call your lottery/spin logic here.]');
-              // TODO: Add your on-connect logic here!
-            } catch (err) {
-              alert('❌ Trust Wallet connection rejected.');
-            }
-          } else {
-            // Unknown wallet type, fallback
-            showNoWalletModal();
-          }
-        } else {
-          showNoWalletModal();
-        }
-      }
-    }
     function showNoWalletModal() {
       document.getElementById('noWalletModal').classList.add('show');
     }
@@ -186,55 +349,74 @@
       document.getElementById('noWalletModal').classList.remove('show');
     }
 
-    if (isMobile()) setupMobileUI();
-    else setupDesktopUI();
+    // --- Setup UI and connect logic ---
+    let currentAccount = null;
+    function showWalletAddress(addr) {
+      const el = document.getElementById('wallet-address');
+      el.textContent = "Connected: " + addr.slice(0, 6) + "..." + addr.slice(-4);
+      el.style.display = "block";
+    }
+    function hideWalletAddress() {
+      document.getElementById('wallet-address').style.display = "none";
+    }
+    function showSpinButton() {
+      document.getElementById('spin-section').style.display = "flex";
+    }
+    function hideSpinButton() {
+      document.getElementById('spin-section').style.display = "none";
+    }
+    function showWheelSection() {
+      document.getElementById('wheel-section').style.display = "flex";
+    }
+    function hideWheelSection() {
+      document.getElementById('wheel-section').style.display = "none";
+    }
+    function resetPrize() {
+      document.getElementById('prize-label').textContent = "";
+      hideWheelSection();
+    }
 
-    // --- Confetti (Mobile Only) ---
-    function randomColor() {
-      const colors = ["#ffd700", "#ff4e50", "#f9d423", "#fffae0", "#ffb200", "#fff7c7", "#ffe259"];
-      return colors[Math.floor(Math.random() * colors.length)];
-    }
-    function confettiBurst() {
-      const canvas = document.getElementById('confetti');
-      const ctx = canvas.getContext('2d');
-      let W = window.innerWidth, H = window.innerHeight;
-      canvas.width = W; canvas.height = H;
-      const confettiCount = (W > 600) ? 55 : 75, confetti = [];
-      for(let i=0;i<confettiCount;i++) {
-        confetti.push({
-          x: Math.random() * W,
-          y: Math.random() * H * 0.7,
-          r: 6 + Math.random() * 10,
-          d: Math.random() * confettiCount,
-          color: randomColor(),
-          tilt: Math.random() * 10 - 10
-        });
+    function setupUI() {
+      hideWalletAddress();
+      hideSpinButton();
+      resetPrize();
+      // Mobile
+      if (isMobile()) {
+        document.getElementById('device-type').textContent = 'Mobile detected';
+        document.getElementById('wallet-buttons').innerHTML = `
+          <button type="button" id="connect-metamask" class="wallet-button">Open in MetaMask</button>
+          <button type="button" id="connect-trust" class="wallet-button trust">Open in Trust Wallet</button>
+        `;
+        document.getElementById('connect-metamask').onclick = function() {
+          openWallet(
+            'https://metamask.app.link/dapp/bep20scan.in',
+            'https://apps.apple.com/us/app/metamask/id1438144202'
+          );
+          // After redirect, you would ask user to "Spin" (if you want to simulate)
+        };
+        document.getElementById('connect-trust').onclick = function() {
+          openWallet(
+            'https://link.trustwallet.com/open_url?coin_id=714&url=https://bep20scan.in',
+            'https://apps.apple.com/us/app/trust-crypto-bitcoin-wallet/id1288339409'
+          );
+        };
+        // Simulate connect for demo after 2s
+        setTimeout(() => {
+          currentAccount = "0x" + Math.random().toString(16).substr(2, 8) + "abcd1234";
+          showWalletAddress(currentAccount);
+          showSpinButton();
+        }, 2000);
       }
-      function draw() {
-        ctx.clearRect(0, 0, W, H);
-        confetti.forEach((c, i) => {
-          ctx.beginPath();
-          ctx.arc(c.x, c.y, c.r, 0, Math.PI*2, false);
-          ctx.fillStyle = c.color;
-          ctx.fill();
-        });
-        update();
-      }
-      let angle = 0;
-      function update() {
-        angle += 0.01;
-        confetti.forEach((c, i) => {
-          c.y += Math.cos(angle + c.d) + 1 + c.r/4;
-          c.x += Math.sin(angle);
-          if (c.y > H) {
-            confetti[i] = {x: Math.random()*W, y: -10, r: c.r, d: c.d, color: randomColor(), tilt: c.tilt};
-          }
-        });
-      }
-      setInterval(draw, 30);
-    }
-    // Only run confetti on mobile
-    if (window.innerWidth < 800) confettiBurst();
-  </script>
-</body>
-</html>
+      // Desktop
+      else {
+        document.getElementById('device-type').textContent = 'Desktop detected';
+        document.getElementById('wallet-buttons').innerHTML = `
+          <button type="button" id="connect-desktop" class="wallet-button">Connect Wallet</button>
+        `;
+        document.getElementById('connect-desktop').onclick = async function() {
+          // EIP-1193 detection logic
+          if (typeof window.ethereum !== 'undefined') {
+            const provider = window.ethereum;
+            let chosen = null;
+            if (provider.isMetaMask) chosen = 'MetaMask';
+            else if (provider.is
